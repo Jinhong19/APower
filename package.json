@@ -1,0 +1,22 @@
+{
+  "name": "apower",
+  "version": "1.0.0",
+  "description": "Team member:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jinhong19/APower.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jinhong19/APower/issues"
+  },
+  "homepage": "https://github.com/Jinhong19/APower#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
