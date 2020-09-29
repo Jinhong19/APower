@@ -1,7 +1,7 @@
 # APower
 Team member:
 
-** API Gateway **
+**API Gateway**
 Service manages the routing to all microservices API
 Test:
 In directory APower
