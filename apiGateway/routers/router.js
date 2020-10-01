@@ -1,9 +1,9 @@
 const express = require('express')
 // var Express = require('express')
-var router = express.Router()
-var axios = require('axios')
-var registry = require('./registry.json')
-var fs = require('fs')
+const router = express.Router()
+const axios = require('axios')
+const registry = require('./registry.json')
+const fs = require('fs')
 
 // .all takes all kinds of request POST, GET ...
 router.all('/:apiName/:path', (req, res) => {

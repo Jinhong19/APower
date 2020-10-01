@@ -1,15 +1,17 @@
-var express = require('express')
-var app = express()
+const express = require('express')
+const app = express()
 // hold all routes in routes dir to handel request
-var routes = require('./routers/router.js');
-var port = 3000;
+const routes = require('./routers/router.js');
+const PORT = 3000;
+
+app.listen(PORT, console.log(`Server started on port ${PORT}`))
 
 app.use(express.json());
 
 app.use('/', routes);
 
-app.listen(port, ()=>{
-    console.log("The Gateway started at port "+ port)
+app.listen(PORT, ()=>{
+    console.log("The Gateway started at PORT "+ PORT)
 }) 
 
 //test: start index.js testapi.js call http://localhost:3000/testapi/testpath
