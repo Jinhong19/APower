@@ -6,7 +6,8 @@
   "scripts": {
     "apiGateway": "node ./apiGateway/index.js",
     "testapi": "node ./apiGateway/testapi.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./apiGateway/index.js"
   },
   "repository": {
     "type": "git",

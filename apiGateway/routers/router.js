@@ -31,7 +31,7 @@ router.all('/:apiName/:path', (req, res) => {
 // curl -X POST -d '{"apiName": "test","host": "http://localhost","port": 3001,"url": "http://localhost:3001/"}'
 // -H 'Content-Type: application/json' http://localhost:3000/register
 router.post('/register', (req,res) => {
-    var registrationInfo = req.body
+    let registrationInfo = req.body
     registry.services[registrationInfo.apiName] = {...registrationInfo}
 
     fs.writeFile('./routers/registry.json', JSON.stringify(registry), (error) => {
