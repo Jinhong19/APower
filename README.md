@@ -22,9 +22,9 @@ For user register, user needs provide an unique username and a password between 
 
 - /:id
 
-![getoneuser](/pic/getoneuser.png)
+![getoneuser](/pic/oneuser.png)
 
-![deleteoneuser](/pic/deleteoneuser.png)
+![deleteoneuser](/pic/deleteonuser.png)
 
 ![updateoneuser](/pic/updateoneuser.png)
 
