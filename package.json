@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "apiGateway": "node ./apiGateway/index.js",
-    "testapi": "node ./apiGateway/testapi.js",
+    "testapi": "nodemon ./apiGateway/testapi.js",
+    "usersapi": "nodemon ./apiGateway/usersapi.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./apiGateway/index.js"
+    "dev":"nodemon ./apiGateway/index.js"
   },
   "repository": {
     "type": "git",
