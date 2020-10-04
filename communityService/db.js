@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+var url = 'mongodb://localhost/communityDatabase';
 
-mongoose.connect('mongodb://localhost/community', {
+mongoose.connect(url, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useCreateIndex: true,
