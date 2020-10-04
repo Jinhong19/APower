@@ -1,6 +1,7 @@
 const express = require('express');
 var db = require('../db');
 var community = require('../model/community');
+var stringSimilarity = require('string-similarity');
 
 var router = express.Router();
 
@@ -95,10 +96,60 @@ router.post('/invite', function(req,res){
                             {'creator' :  req.body.userId,'communityName' : req.body.communityName}]}, // if user is creator
                             function (err, result){ // check if memebr in the community
         if(result){
-            res.send('player invited');
+            res.send('user invited');
         }
         else
             res.send('error, you have no authority to invite user');
+    });
+});
+
+router.post('/searchCommunity', function(req,res){
+    var Community = community.community;
+
+    searchResult = [];
+    rLength = 10;
+    r = [];
+
+    Community.find({}, function(err,result){
+        if(result.length > 0){ // check if there exsits community in database
+            if(result.length < rLength) // assign search result length with result length if have less than 10 community
+                rLength = result.length;
+
+            for (var i=0 ;i<rLength ;i++){ // initialize array
+                r.push({'communityIndex' : -1
+                        ,'similarity' : 0
+                        });
+            }
+
+            for(var i = 0; i<result.length; i++){
+                var similarity = stringSimilarity.compareTwoStrings(req.body.communityName, result[i].communityName); // compare community name similarity 
+                for(var j=rLength-1; j>=0; j--){
+                    if(similarity > r[j].similarity){ // if similarity greater than current element's similarity
+                        if(j !== rLength-1){ // if at the last index
+                            r[j+1].similarity = r[j].similarity;
+                            r[j+1].communityIndex = r[j].communityIndex;
+                        }
+                        // swap
+                        r[j].similarity = similarity; 
+                        r[j].communityIndex = i;
+                    }
+                }
+            }
+
+            // assign result array with corresponding value
+            for(var i = 0; i<rLength; i++){
+                searchResult.push({
+                    'communityName' : result[r[i].communityIndex].communityName,
+                    'detail' : result[r[i].communityIndex].detail,
+                    'numberOfMember' : result[r[i].communityIndex].memberIdList.length
+                })
+            }
+            res.send(searchResult);
+        }
+        else if(result.length == 0)
+            res.send('zero community exists');
+        else
+            res.send('error');
     });
 });
 
