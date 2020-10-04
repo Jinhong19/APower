@@ -5,14 +5,14 @@ var stringSimilarity = require('string-similarity');
 
 var router = express.Router();
 
-router.post('/create', function(req,res){
+router.post('/create', async function(req,res){
     var Community = community.community;
     
-    Community.exists({'communityName' : req.body.communityName}, function (err, result){  // check if community already exists
+    Community.exists({'communityName' : req.body.communityName}, await function (err, result){  // check if community already exists
         if (result) // exist
             res.send('community name already exist');
         else{ // not exist, create community
-            console.log(community.create_Community(req.body.communityName,req.body.creator,req.body.detial,req.body.public,req.body.rulebook));
+            community.create_Community(req.body.communityName,req.body.creator,req.body.detial,req.body.public,req.body.rulebook);
             res.send('community create success');
         }
     });
@@ -21,13 +21,23 @@ router.post('/create', function(req,res){
 router.post('/join', function(req,res){
     var Community = community.community;
 
-    Community.exists({'communityName' : req.body.communityName, 'memberIdList' : req.body.userId}, function (err, result){  // check if already join
-        if (result) // already join
-            res.send('user already joined community');
-        else{ // not already join, 
-            console.log(community.join_Community(req.body.communityName, req.body.name));
-            res.send('user join success');
+    Community.findOne({'communityName' : req.body.communityName}, function (err, result){  // check if already join
+        if (result){// if community exists
+            console.log(result.isPublic == true);
+            if(result.memberIdList.includes(req.body.userId)) // if user already in the community
+                res.send('user already joined community');
+            else{
+                // join if the community is public 
+                if(result.isPublic == true){ 
+                    console.log(community.join_Community(req.body.communityName, req.body.userId));
+                    res.send('user join success');
+                }
+                else // unable to join, community is private
+                    res.send('the community is not public');
+            }
         }
+        else // no community found
+            res.send('community does not exists');
     })
 });
 
@@ -44,6 +54,7 @@ router.post('/quit', function(req,res){
                 res.send('community has been delete, since current user is the laster member in this community');
             }
             else{ // user quit
+                community.quit_Community(req.body.communityName, req.body.userId);
                 res.send('user successfully quit the community!');
             }
         }
@@ -64,12 +75,14 @@ router.post('/kickMember', function(req,res){
         if(result){ // if in
             if(result.memberIdList.includes(req.body.kickUserId) == true){ // if kickUser in the community
                 if(req.body.userId == result.creatorId){ // if crator want to kick an user
+                    community.quit_Community(req.body.communityName, req.body.kickUserId);
                     res.send('user successfully kick out ' + req.body.kickUsername + " from the community");
                 }
                 else if(result.adminIdList.includes(req.body.userId) == true){ // if have admin authority
                     if(result.adminIdList.includes(req.body.kickUserId) == true) // if try to kick admin
                         res.send('unable to kick user that have same authority than you');
                     else{ // if try to kick user
+                        community.quit_Community(req.body.communityName, req.body.kickUserId);
                         res.send('user successfully kick out ' + req.body.kickUsername + " from the community");
                     }
                 }
@@ -96,6 +109,7 @@ router.post('/invite', function(req,res){
                             {'creator' :  req.body.userId,'communityName' : req.body.communityName}]}, // if user is creator
                             function (err, result){ // check if memebr in the community
         if(result){
+            community.join_Community(req.body.communityName, req.body.inviteUserId);
             res.send('user invited');
         }
         else
