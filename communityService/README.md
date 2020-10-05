@@ -31,3 +31,51 @@ Now, open up a web browser and enter http://localhost:3000 in the URL bar.
 * /create
 
 ![POST_create](exampleImage/POST_create.PNG)
+
+* /join
+
+![POST_join](exampleImage/POST_join.PNG)
+
+* /invite
+
+![POST_invite](exampleImage/POST_invite.PNG)
+
+* /kickMember
+
+![POST_kickMember](exampleImage/POST_kickMember.PNG)
+
+* /quit
+
+![POST_quit](exampleImage/POST_quit.PNG)
+
+* /removeAdmin
+
+![POST_removeAdmin](exampleImage/POST_removeAdmin.PNG)
+
+* /searchCommunity
+
+![POST_searchCommunity](exampleImage/POST_searchCommunity.PNG)
+
+* /communityList
+
+![GET_communityList](exampleImage/POST_communityList.PNG)
+
+* /assignAdmin
+
+![POST_assignAdmin](exampleImage/POST_assignAdmin.PNG)
+
+* /changeCreator
+
+![POST_changeCreator](exampleImage/POST_changeCreator.PNG)
+
+* /communityAdminList
+
+![POST_communityAdminList](exampleImage/POST_communityAdminList.PNG)
+
+* /creator
+
+![POST_communityCreator](exampleImage/POST_communityCreator.PNG)
+
+* /communityMemberList
+
+![POST_communityMemberList](exampleImage/POST_communityMemberList.PNG)
