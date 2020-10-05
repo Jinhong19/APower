@@ -12,7 +12,7 @@ router.post('/create', async function(req,res){
         if (result) // exist
             res.send('community name already exist');
         else{ // not exist, create community
-            community.create_Community(req.body.communityName,req.body.creator,req.body.detial,req.body.public,req.body.rulebook);
+            community.create_Community(req.body.communityName, req.body.creator, req.body.detial, req.body.public, req.body.rulebook);
             res.send('community create success');
         }
     });
@@ -51,11 +51,13 @@ router.post('/searchCommunity', function(req,res){
             }
             // assign result array with corresponding value
             for(var i = 0; i<rLength; i++){
-                searchResult.push({
+                if(r[i].communityIndex >=0 ){
+                    searchResult.push({
                     'communityName' : result[r[i].communityIndex].communityName,
                     'detail' : result[r[i].communityIndex].detail,
                     'numberOfMember' : result[r[i].communityIndex].memberIdList.length
                 })
+                }
             }
             res.send(searchResult);
         }

@@ -34,7 +34,7 @@ router.post('/removeAdmin', function(req,res){
     Community.findOne({'communityName' : req.body.communityName, 'adminIdList' : req.body.removeAdminId}, function(err, result){
         if(result){
             if(result.creatorId == req.body.userId || req.body.userId == req.body.removeAdminId){
-                community.remove_Admin(communityName,req.body.removeAdminId);
+                community.remove_Admin(req.body.communityName,req.body.removeAdminId);
                 res.send('user has been remove from admin list')
             } 
         else
