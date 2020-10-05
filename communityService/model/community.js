@@ -6,12 +6,8 @@ const communitySchema = new Schema({
     creatorId: {type:String, require:true},
     detail: {type:String, default: 'This community owner is lazy.'},
     isPublic: {type:Boolean, require:true},
-    memberIdList: [{
-        type:String
-    }],
-    adminIdList: [{
-        memberId: {type:String}
-    }],
+    memberIdList: [{type:String}],
+    adminIdList: [{type:String}],
     rulebook: {type:String},
 }, {
 });
@@ -19,29 +15,43 @@ const communitySchema = new Schema({
 async function assignMember(communityName,userId){
     Community.findOneAndUpdate({'communityName' : communityName},{  $push: {'memberIdList' : userId} }, await function (err, success){
         if (err) return handleError(err);
-        else return success;
+        else return 'success';
     });
 }
 
 async function assignAdmin(communityName,userId){
     Community.findOneAndUpdate({'communityName' : communityName},{  $push: {'adminIdList' : userId} }, await function (err, success){
         if (err) return handleError(err);
-        else return success;
+        else return 'success';
     });
 }
 
 async function removeMember(communityName, userId){
     Community.findOneAndUpdate({'communityName' : communityName},{  $pull: {'memberIdList' : userId} }, await function (err, success){
         if (err) return handleError(err);
-        else return success;
+        else return 'success';
     });
 }
 
 async function removeAdmin(communityName, userId){
     Community.findOneAndUpdate({'communityName' : communityName},{  $pull: {'adminIdList' : userId} }, await function (err, success){
         if (err) return handleError(err);
-        else return success;
+        else return 'success';
     });
+}
+
+async function assignCreator(communityName, userId){
+    Community.findOneAndUpdate({'communityName' : communityName},{'creatorId' : userId}, await function (err, success){
+        if (err) return handleError(err);
+        else return 'success';
+    });
+}
+
+async function deleteCommunity(communityName){
+    Community.deleteOne({'communityName' : communityName}, function(err){
+        if (err) return handleError(err);
+        else return 'success';
+    })
 }
 
 async function createCommunity(name, creator, detail, public, rulebook){
