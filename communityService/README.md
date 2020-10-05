@@ -30,4 +30,4 @@ Now, open up a web browser and enter http://localhost:3000 in the URL bar.
 
 * /create
 
-![POST_create](exampleImage/POST_create.png)
+![POST_create](exampleImage/POST_create.PNG)
