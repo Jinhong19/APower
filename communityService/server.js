@@ -16,4 +16,10 @@ app.listen(port, function() {
 });
 
 let communityRouter = require('./routes/community');
+let creatorRouter = require('./routes/creator');
+let adminRouter = require('./routes/admin');
+let userRouter = require('./routes/user');
 app.use('/', communityRouter);
+app.use('/', creatorRouter);
+app.use('/', adminRouter);
+app.use('/', userRouter);
