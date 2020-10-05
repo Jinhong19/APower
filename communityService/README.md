@@ -6,6 +6,7 @@ Community service manages all community data and handle incoming http request
 
 ## Setup 
 You need the latest stable versions of these programs:
+
     * MongoDB
     * npm
     * node
