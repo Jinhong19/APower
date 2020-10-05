@@ -29,4 +29,4 @@ Now, open up a web browser and enter http://localhost:3000 in the URL bar.
 ## Example
 
 * /create
-!(/exampleImage/POST_create.png)
+![/create](/exampleImage/POST_create.png)
