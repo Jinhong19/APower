@@ -13,6 +13,7 @@ const communitySchema = new Schema({
 });
 
 async function assignMember(communityName,userId){
+    const Community = db.model('Community',communitySchema);
     Community.findOneAndUpdate({'communityName' : communityName},{  $push: {'memberIdList' : userId} }, await function (err, success){
         if (err) return handleError(err);
         else return 'success';
@@ -20,6 +21,7 @@ async function assignMember(communityName,userId){
 }
 
 async function assignAdmin(communityName,userId){
+    const Community = db.model('Community',communitySchema);
     Community.findOneAndUpdate({'communityName' : communityName},{  $push: {'adminIdList' : userId} }, await function (err, success){
         if (err) return handleError(err);
         else return 'success';
@@ -27,6 +29,7 @@ async function assignAdmin(communityName,userId){
 }
 
 async function removeMember(communityName, userId){
+    const Community = db.model('Community',communitySchema);
     Community.findOneAndUpdate({'communityName' : communityName},{  $pull: {'memberIdList' : userId} }, await function (err, success){
         if (err) return handleError(err);
         else return 'success';
@@ -34,6 +37,7 @@ async function removeMember(communityName, userId){
 }
 
 async function removeAdmin(communityName, userId){
+    const Community = db.model('Community',communitySchema);
     Community.findOneAndUpdate({'communityName' : communityName},{  $pull: {'adminIdList' : userId} }, await function (err, success){
         if (err) return handleError(err);
         else return 'success';
@@ -41,6 +45,7 @@ async function removeAdmin(communityName, userId){
 }
 
 async function assignCreator(communityName, userId){
+    const Community = db.model('Community',communitySchema);
     Community.findOneAndUpdate({'communityName' : communityName},{'creatorId' : userId}, await function (err, success){
         if (err) return handleError(err);
         else return 'success';
@@ -48,20 +53,15 @@ async function assignCreator(communityName, userId){
 }
 
 async function deleteCommunity(communityName){
-    Community.deleteOne({'communityName' : communityName}, function(err){
+    const Community = db.model('Community',communitySchema);
+    Community.deleteOne({'communityName' : communityName}, await function(err){
         if (err) return handleError(err);
         else return 'success';
-    })
+    });
 }
 
 async function createCommunity(name, creator, detail, public, rulebook){
     const Community = db.model('Community',communitySchema);
-
-    // check if community name already in use
-    await Community.exists({name : name}, function (err, result){ 
-        console.log(result); 
-        if (result) return "Community name already been used";
-    })
 
     // create and add to db
     const communty = new Community({
@@ -86,18 +86,22 @@ async function joinCommunity(communityName,userId){
 }
 
 async function quitCommunity(communityName,userId){
-    const Community = db.model('Community',communitySchema);
-
     removeMember(communityName,userId);
     removeAdmin(communityName,userId);
 }
 
-async function assignAdmins(communityName,userId){
-    assignAdmin(communityName,userId);
+async function changeCreator(communityName,userId){
+    removeAdmin(communityName,userId);
+    assignCreator(communityName,userId);
 }
+
 
 module.exports.community = db.model('Community',communitySchema);
 module.exports.create_Community = createCommunity;
 module.exports.join_Community = joinCommunity;
 module.exports.quit_Community = quitCommunity;
-module.exports.assign_Admin = assignAdmins;
+module.exports.assign_Admin = assignAdmin;
+module.exports.delete_Community = deleteCommunity;
+module.exports.assign_Creator = assignCreator;
+module.exports.remove_Admin = removeAdmin;
+module.exports.change_Creator = changeCreator;
