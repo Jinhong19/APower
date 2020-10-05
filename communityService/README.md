@@ -58,7 +58,7 @@ Now, open up a web browser and enter http://localhost:3000 in the URL bar.
 
 * /communityList
 
-![GET_communityList](exampleImage/POST_communityList.PNG)
+![GET_communityList](exampleImage/GET_communityList.PNG)
 
 * /assignAdmin
 
