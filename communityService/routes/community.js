@@ -18,105 +18,6 @@ router.post('/create', async function(req,res){
     });
 });
 
-router.post('/join', function(req,res){
-    var Community = community.community;
-
-    Community.findOne({'communityName' : req.body.communityName}, function (err, result){  // check if already join
-        if (result){// if community exists
-            console.log(result.isPublic == true);
-            if(result.memberIdList.includes(req.body.userId)) // if user already in the community
-                res.send('user already joined community');
-            else{
-                // join if the community is public 
-                if(result.isPublic == true){ 
-                    console.log(community.join_Community(req.body.communityName, req.body.userId));
-                    res.send('user join success');
-                }
-                else // unable to join, community is private
-                    res.send('the community is not public');
-            }
-        }
-        else // no community found
-            res.send('community does not exists');
-    })
-});
-
-router.post('/quit', function(req,res){
-    var Community = community.community;
-
-    Community.findOne({'communityName' : req.body.communityName, 'memberIdList' :  req.body.userId}, function (err, result){ // check if memebr in the community
-        console.log(result);
-        if(result){ // in community
-            if(result.creatorId == req.body.userId && result.memberIdList.length > 1){ // if creator want to quit with more than one member in the community
-                res.send('creator must give leadership to other member before quit');
-            }
-            else if(result.creatorId == req.body.userId && result.memberIdList.length == 1) { // if creator want to quit with only one him self in the community
-                res.send('community has been delete, since current user is the laster member in this community');
-            }
-            else{ // user quit
-                community.quit_Community(req.body.communityName, req.body.userId);
-                res.send('user successfully quit the community!');
-            }
-        }
-        else // member is in in the community
-            res.send('unable to find user within the community');
-    });
-});
-
-router.post('/kickMember', function(req,res){
-    var Community = community.community;
-
-    if(req.body.userId == req.body.kickUserId){ // check if kick self
-        res.send('unable to kick your self');
-        return;
-    }
-
-    Community.findOne({'communityName' : req.body.communityName, 'memberIdList' :  req.body.userId}, function (err, result){ // check if memebr in the community
-        if(result){ // if in
-            if(result.memberIdList.includes(req.body.kickUserId) == true){ // if kickUser in the community
-                if(req.body.userId == result.creatorId){ // if crator want to kick an user
-                    community.quit_Community(req.body.communityName, req.body.kickUserId);
-                    res.send('user successfully kick out ' + req.body.kickUsername + " from the community");
-                }
-                else if(result.adminIdList.includes(req.body.userId) == true){ // if have admin authority
-                    if(result.adminIdList.includes(req.body.kickUserId) == true) // if try to kick admin
-                        res.send('unable to kick user that have same authority than you');
-                    else{ // if try to kick user
-                        community.quit_Community(req.body.communityName, req.body.kickUserId);
-                        res.send('user successfully kick out ' + req.body.kickUsername + " from the community");
-                    }
-                }
-                else // no authority
-                    res.send('you have no authority to kick a member');
-            } 
-            else
-            res.send('error, unable to find the community with user');
-        }
-        else{ // not in the community
-            res.send('error, unable to find the community with user');
-        }
-    });
-});
-
-router.post('/invite', function(req,res){
-    var Community = community.community;
-    if(req.body.userId == req.body.inviteUserId){ // check if invite self
-        res.send('unable to invite your self');
-        return;
-    }
-
-    Community.findOne({$or:[{'adminIdList' :  req.body.userId,'communityName' : req.body.communityName},  // if user is admin
-                            {'creator' :  req.body.userId,'communityName' : req.body.communityName}]}, // if user is creator
-                            function (err, result){ // check if memebr in the community
-        if(result){
-            community.join_Community(req.body.communityName, req.body.inviteUserId);
-            res.send('user invited');
-        }
-        else
-            res.send('error, you have no authority to invite user');
-    });
-});
-
 router.post('/searchCommunity', function(req,res){
     var Community = community.community;
 
@@ -134,7 +35,6 @@ router.post('/searchCommunity', function(req,res){
                         ,'similarity' : 0
                         });
             }
-
             for(var i = 0; i<result.length; i++){
                 var similarity = stringSimilarity.compareTwoStrings(req.body.communityName, result[i].communityName); // compare community name similarity 
                 for(var j=rLength-1; j>=0; j--){
@@ -149,7 +49,6 @@ router.post('/searchCommunity', function(req,res){
                     }
                 }
             }
-
             // assign result array with corresponding value
             for(var i = 0; i<rLength; i++){
                 searchResult.push({
@@ -164,68 +63,56 @@ router.post('/searchCommunity', function(req,res){
             res.send('zero community exists');
         else
             res.send('error');
+    })
+});
+
+router.post('/communityCreator', function(req,res){
+    var Community = community.community;
+
+    Community.findOne({'communityName' : req.body.communityName}, function(err,result){
+        if(result)
+            res.send(result.creatorId); //@redo when merge
+        else
+            res.send('community does not exsits');
     });
 });
 
-router.post('/assignAdmin', function(req,res){
+router.post('/communityMemberList', function(req,res){
     var Community = community.community;
 
-    if(req.body.userId == req.body.assignUserID)
-        res.send("you can't assign yourself to be an admin");
-    else{
-        Community.findOne({'communityName' : req.body.communityName}, function(err,result){
-            if(result){
-                if(result.memberIdList.includes(req.body.assignUserID) == false)
-                    res.send('user is not in the community');
-                else if (result.adminIdList.includes(req.body.assignUserID))
-                    res.send('user is already a admin');
-                else if(result.creatorId !== req.body.userId)
-                    res.send("you don't have authority to assign user as admin");
-                else{
-                    community.assign_Admin(req.body.communityName, req.assignUserID);
-                    res.send('assign success');
-                }
+    Community.findOne({'communityName' : req.body.communityName}, function(err,result){
+        if(result)
+            res.send(result.memberIdList); //@redo when merge
+        else
+            res.send('community does not exsits');
+    });
+})
+
+router.post('/communityAdminList', function(req,res){
+    var Community = community.community;
+
+    Community.findOne({'communityName' : req.body.communityName}, function(err,result){
+        if(result)
+            res.send(result.adminIdList); //@redo when merge
+        else
+            res.send('community does not exsits');
+    });
+})
+
+router.get('/communityList', function(req,res){
+    var Community = community.community;
+
+    var resultArray = [];
+    Community.find({}, function(err,result){
+        if(result){
+            for(var i=0; i<result.length; i++){
+                resultArray.push(result[i].communityName);
             }
-            else
-                res.send('community does not exists');
-        });
-    }
-});
-
-router.post('/removeAdmin', function(req,res){
-    var Community = community.community;
-
-    Community.findOne({'communityName' : req.body.communityName, 'adminIdList' : req.body.removeAdminId}, function(err, result){
-        if(result){
-            if(result.creatorId == req.body.userId || req.body.userId == req.body.removeAdminId){
-                community.removeAdminId(communityName,req.body.removeAdminId);
-                res.send('user has been remove from admin list')
-            } 
-        else
-            res.send('user is not an admin')
-        }
-    });
-});
-
-router.post('/abdicate', function(req,res){
-    var Community = community.community;
-
-    Community.exists({'communityName' : req.body.communityName, 'creatorId' : req.body.userId, 'memberIdList' : req.body.newCreatorId}, function(err,result){
-        if(result){
-            community.assignCreator(communityName,req.body.newCreatorId);
-            res.send('new creator roll assigned');
+            res.send(resultArray);
         }
         else
-            res.send('unable to assign');
-    });
-});
-
-router.post('/createGameRoom', function(req,res){
-    res.send('calling game service');
-});
-
-router.get('/communityHome', function(req,res){
-
+            res.send('no community exsits');
+    })
 });
 
 module.exports = router;
