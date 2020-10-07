@@ -4,11 +4,11 @@
   "description": "Team member:",
   "main": "index.js",
   "scripts": {
-    "apiGateway": "node ./apiGateway/index.js",
-    "testapi": "nodemon ./apiGateway/testapi.js",
-    "usersapi": "nodemon ./apiGateway/usersapi.js",
+    "start": "node ./index.js",
+    "testapi": "nodemon ./testapi.js",
+    "usersapi": "nodemon ./usersapi.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":"nodemon ./apiGateway/index.js"
+    "dev": "nodemon ./index.js"
   },
   "repository": {
     "type": "git",
