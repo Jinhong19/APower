@@ -1,2 +1,6 @@
-# APower
-Team member:
+# Apower
+## Current Services
+| service | used port | description | api document |
+| --- | --- | --- | --- |
+| dice | 3005 |
+| apiGateway | 3000 |
