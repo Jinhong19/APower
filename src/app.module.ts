@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 const dbUrl = 'mongodb+srv://ysha:Woaizhongguo%402020@cluster1.ieadu.mongodb.net/test?retryWrites=true&w=majority';
 @Module({
@@ -12,7 +13,9 @@ const dbUrl = 'mongodb+srv://ysha:Woaizhongguo%402020@cluster1.ieadu.mongodb.net
       useCreateIndex: true,
       useFindAndModify: false,
     }),
-    UsersModule],
+    UsersModule,
+    AuthModule,
+  ],
 })
 
 export class AppModule {}

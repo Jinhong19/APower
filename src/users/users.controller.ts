@@ -1,17 +1,23 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Request, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
+import { AuthGuard } from '@nestjs/passport';
 
+import { LocalAuthGuard } from './../auth/local-auth.guard';
+import { JwtAuthGuard } from './../auth/jwt-auth.guard';
+import { AuthService } from './../auth/auth.service';
 import { UsersService } from './users.service';
-import { CreateUserDto, RegisterUserDto } from './user.dto';
+import { CreateUserDto, RegisterUserDto, SigninDto } from './user.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private userService: UsersService) { }
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService
+  ) { }
 
-  // create user (store one password; can be deleted future)
   @Post('')
   async create(@Res() res: Response, @Body() createUserDto: CreateUserDto) {
-    const user = await this.userService.create(createUserDto);
+    const user = await this.usersService.create(createUserDto);
     return res.status(HttpStatus.CREATED).json({
       status: 201,
       message: "User created successful!",
@@ -19,9 +25,17 @@ export class UsersController {
     });
   }
 
-  // create user (store two passwords, and compare these two)
+  @UseGuards(LocalAuthGuard)
+  // @UseGuards(AuthGuard('local'))
+  @Post('login')
+  async login(@Body() body) {
+    // console.log(body);
+    return this.authService.login(body.username, body.password);
+  }
+
   @Post('/register')
   async register(@Res() res: Response, @Body() registerUserDto: RegisterUserDto) {
+    // console.log(registerUserDto);
 
     const p1 = registerUserDto.password1;
     const p2 = registerUserDto.password2;
@@ -30,7 +44,8 @@ export class UsersController {
       // console.log(`two password not equal: ${p1}/${p2}`)
       return res.status(HttpStatus.BAD_REQUEST).json({
         status: 400,
-        message: "two password not equal!"
+        message: "Two password not equal!",
+        data: null,
       });
     }
 
@@ -39,54 +54,76 @@ export class UsersController {
     createUserDto.password = p1;
     createUserDto.email = registerUserDto.email;
 
-    const user = await this.userService.create(createUserDto);
+    const user = await this.usersService.create(createUserDto);
     return res.status(HttpStatus.CREATED).json({
       status: 201,
       message: "User created successful!",
-      data: user
+      data: user,
     });
   }
 
-  // get all users (can be useful or not in future)
+  @UseGuards(JwtAuthGuard)
   @Get('')
   async getAll(@Res() res) {
-    const users = await this.userService.getAll();
+    const users = await this.usersService.getAll();
     return res.status(HttpStatus.OK).json({
       status: 200,
-      data: users
+      message: "Get all users successful!",
+      data: users,
     });
   }
 
-  // get one user by user's id
   @Get(":id")
-  async getOneUser(@Res() res, @Param('id') _id: string) {
-    const user = await this.userService.getOneUser(_id);
+  async getOne(@Res() res, @Param('id') _id: string) {
+    const user = await this.usersService.getOneUser(_id);
     if (!user)
       return res
         .status(HttpStatus.NOT_FOUND)
-        .json({ status: 404, error: "User not found!" });
-    return res.status(HttpStatus.OK).json({ status: 200, data: user });
+        .json({
+          status: 404,
+          message: "User not found!",
+          data: null,
+        });
+    return res.status(HttpStatus.OK).json({
+      status: 200,
+      message: "Get user successful!",
+      data: user,
+    });
   }
 
-  // update one user's information by user's id
   @Patch(':id')
-  async updateUser(@Res() res, @Body() createUserDto: CreateUserDto, @Param("id") _id: string) {
-    const user = await this.userService.updateOneUser(_id, createUserDto);
+  async update(@Res() res, @Body() createUserDto: CreateUserDto, @Param("id") _id: string) {
+    const user = await this.usersService.updateOneUser(_id, createUserDto);
     if (!user)
       return res
         .status(HttpStatus.NOT_FOUND)
-        .json({ status: 404, error: "User not found!" });
-    return res.status(HttpStatus.OK).json({ status: 200, data: user });
+        .json({
+          status: 404,
+          message: "User not found!",
+          data: null,
+        });
+    return res.status(HttpStatus.OK).json({
+      status: 200,
+      message: "Update user successful!",
+      data: user,
+    });
   }
 
-  // delete one user by user's id
   @Delete(':id')
-  async deleteOneUser(@Res() res, @Param('id') _id: string) {
-    const user = await this.userService.deleteOneUser(_id);
+  async delete(@Res() res, @Param('id') _id: string) {
+    const user = await this.usersService.deleteOneUser(_id);
     if (!user)
       return res
         .status(HttpStatus.NOT_FOUND)
-        .json({ status: 404, error: "User not found!" });
-    return res.status(HttpStatus.OK).json({ status: 200, message: "Delete user successful" });
+        .json({
+          status: 404,
+          message: "User not found!",
+          data: null,
+        });
+    return res.status(HttpStatus.OK).json({
+      status: 200,
+      message: "Delete user successful",
+      data: user,
+    });
   }
 }
