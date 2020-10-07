@@ -1,6 +1,5 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Request, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
-import { AuthGuard } from '@nestjs/passport';
 
 import { LocalAuthGuard } from './../auth/local-auth.guard';
 import { JwtAuthGuard } from './../auth/jwt-auth.guard';
@@ -73,6 +72,7 @@ export class UsersController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(":id")
   async getOne(@Res() res, @Param('id') _id: string) {
     const user = await this.usersService.getOneUser(_id);
@@ -91,6 +91,7 @@ export class UsersController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(@Res() res, @Body() createUserDto: CreateUserDto, @Param("id") _id: string) {
     const user = await this.usersService.updateOneUser(_id, createUserDto);
@@ -109,6 +110,7 @@ export class UsersController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async delete(@Res() res, @Param('id') _id: string) {
     const user = await this.usersService.deleteOneUser(_id);
