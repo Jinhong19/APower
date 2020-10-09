@@ -2,7 +2,7 @@
 
 ## Description
 
-Create users service by using NestJS framework (a progressive Node.js framework) with Typescript language.
+Create users service by using NestJS framework (a progressive Node.js framework) with Typescript language. And using Passport and JWT for authentication.
 
 ## Functions
 
@@ -10,11 +10,17 @@ Provide Restful Api for handling user-related functions. Such as create user (re
 
 For user register, user needs provide an unique username and a password between 6 and 20 characters. Also, user needs to make sure their password and confrim password to be same. After creating, database will only store one hashed password.
 
+For authentication part, users will start by authenticating with a username and password. Once authenticated, the server will issue a JWT that can be sent as a bearer token in an authorization header on subsequent requests to prove authentication. Other API routes (except login and register; for login, we use passport-local) are protected based on the presence of a valid JWT as a bearer token. The bearer token is only validated for 2 minutes. After 2 minutes, users need to get another token for future useage. (can be longer)
+
 ### Postman examples
 
 - /register
 
 ![register](/pic/register.png)
+
+- /login
+
+![login](/pic/login.png)
 
 - /
 
@@ -24,44 +30,24 @@ For user register, user needs provide an unique username and a password between 
 
 ![getoneuser](/pic/oneuser.png)
 
-![deleteoneuser](/pic/deleteonuser.png)
+- /:id **after 2 minutes, the baerer token was invalidated**
 
-![updateoneuser](/pic/updateoneuser.png)
+![deleteoneuser](/pic/deleteonuser.png)
 
 ## Run
 
-- **Install Typescript:**
+- **Install Yarn:**
 
 ```bash
-$ npm install typescript --save-dev
-```
-
-- **Install NestJS:**
-
-```bash
-$ npm i -g @nestjs/cli
-```
-
-- **Install packages:**
-
-```bash
-  $ npm install class-validator --save
-
-  $ npm install bcrypt
-
-  $ npm install --save @types/bcrypt
-
-  $ npm install mongoose --save
-
-  $ npm install class-transformer
+$ npm install -g yarn
 ```
 
 - **Start:**
 
 ```bash
-$ nest start --watch
+$ yarn install // install packages written in package.json file
 
-$ https://localhost/3008/...
+$ yarn run start:dev (run)
 ```
 
 ## NestJS
@@ -76,4 +62,4 @@ Under the hood, Nest makes use of Express, but also, provides compatibility with
 
 ## To Do
 
-Need to work with authentication, and connect with apigateway.
+Need to connect with apigateway, and have many-to-many relationship to community.

@@ -2,6 +2,7 @@ import { Strategy } from "passport-local";
 import { PassportStrategy } from "@nestjs/passport";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ContextIdFactory, ModuleRef } from "@nestjs/core";
+import { Request } from "express";
 
 import { AuthService } from "./auth.service";
 
