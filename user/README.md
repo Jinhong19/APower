@@ -16,23 +16,23 @@ For authentication part, users will start by authenticating with a username and 
 
 - /register
 
-![register](/pic/register.png)
+![register](/user/pic/register.png)
 
 - /login
 
-![login](/pic/login.png)
+![login](/user/pic/login.png)
 
 - /
 
-![getallusers](/pic/allusers.png)
+![getallusers](/user/pic/allusers.png)
 
 - /:id
 
-![getoneuser](/pic/oneuser.png)
+![getoneuser](/user/pic/oneuser.png)
 
 - /:id **after 2 minutes, the baerer token was invalidated**
 
-![deleteoneuser](/pic/deleteonuser.png)
+![deleteoneuser](/user/pic/deleteonuser.png)
 
 ## Run
 
