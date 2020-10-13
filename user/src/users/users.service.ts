@@ -4,7 +4,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from "bcrypt";
 
 import { User, UserDocument } from './user.schema';
-import { CreateUserDto } from './user.dto';
+import { Usercomm, UsercommDocument } from '../usercomm/usercomm.schema';
+import { CreateUserDto} from './user.dto';
 
 @Injectable()
 export class UsersService {
