@@ -66,11 +66,3 @@ export class SigninDto {
   @IsNotEmpty()
   password: string;
 }
-
-export class CommunityDto {
-  @IsNotEmpty()
-  user_id: string;
-
-  @IsNotEmpty()
-  comm_id: string;
-}
