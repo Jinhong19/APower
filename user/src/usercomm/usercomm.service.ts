@@ -1,32 +1,45 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
+import { Model } from "mongoose";
+import { InjectModel } from "@nestjs/mongoose";
 
-import { Usercomm, UsercommDocument } from '../usercomm/usercomm.schema';
-import { CommunityDto} from './usercomm.dto';
+import { Usercomm, UsercommDocument } from "./usercomm.schema";
+import { CreateUsercommDto } from "./usercomm.dto";
 
 @Injectable()
 export class UsercommService {
   constructor(
-    @InjectModel(Usercomm.user_id + Usercomm.comm_id) private readonly model: Model<UsercommDocument>
+    @InjectModel(Usercomm.name) private model: Model<UsercommDocument>
   ) { }
 
-  async createComm(communityDto: CommunityDto): Promise<Usercomm> {
-    const createdUserComm = new this.model(communityDto);
-    return createdUserComm.save();
+  async create(dto: CreateUsercommDto): Promise<Usercomm> {
+    const cu = new this.model(dto);
+    return cu.save();
   }
 
-  async getAllUserByCommid(commid): Promise<Usercomm[] | undefined> {
-    const users = await this.model.find({ commid }).exec();
-    return users;
+  async getOne(comm_id, user_id: string): Promise<Usercomm | undefined> {
+    const obj = await this.model.findOne({ comm_id, user_id }).exec();
+    return obj;
   }
 
-  async getAllCommunityByUserid(userid): Promise<Usercomm[] | undefined> {
-    const comms = await this.model.find({ userid }).exec();
-    return comms;
+  async getId(comm_id, user_id: string): Promise<String | undefined> {
+    const obj = await this.model.findOne({ comm_id, user_id }).exec();
+    return obj._id;
   }
 
-  async deleteOneUserComm({userid, commid}): Promise<any> {
-    return await this.model.remove({ userid, commid }).exec();
+  async getCommsByUserId(user_id: string): Promise<Usercomm[]> {
+    return await this.model.find({ user_id }).exec();
+  }
+
+  async getUsersByCommId(comm_id: string): Promise<Usercomm[]> {
+    return await this.model.find({ comm_id }).exec();
+  }
+
+  async update(_id: string, dto: CreateUsercommDto): Promise<Usercomm | undefined> {
+    return await this.model.findByIdAndUpdate(_id, dto, { new: true });
+  }
+
+  async delete(comm_id, user_id: string): Promise<Usercomm | undefined> {
+    console.log(comm_id, user_id);
+    return await this.model.findOneAndDelete({ comm_id, user_id });
   }
 }

@@ -5,11 +5,11 @@ export type UsercommDocument = Usercomm & Document;
 
 @Schema()
 export class Usercomm {
-  @Prop()
-  static user_id: string;
+  @Prop({ required: true })
+  comm_id: string;
 
-  @Prop()
-  static comm_id: string;
+  @Prop({ required: true })
+  user_id: string;
 }
 
 export const UsercommSchema = SchemaFactory.createForClass(Usercomm);

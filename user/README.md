@@ -12,6 +12,10 @@ For user register, user needs provide an unique username and a password between 
 
 For authentication part, users will start by authenticating with a username and password. Once authenticated, the server will issue a JWT that can be sent as a bearer token in an authorization header on subsequent requests to prove authentication. Other API routes (except login and register; for login, we use passport-local) are protected based on the presence of a valid JWT as a bearer token. The bearer token is only validated for 2 minutes. After 2 minutes, users need to get another token for future useage. (can be longer)
 
+## New Functions
+
+Finished creating apis for storing related users' id and communities's id. After the front end gives user's id and one community's id, this service's usercomm api with POST menthod can store these two ids. We can see it as a many-to-many relationships between users and communities, but these two services don't talk to each other. After storing all "relationships", we can find all users by one community id, all communities by one user id, delete specific "relationship", and so on through different apis.
+
 ### Postman examples
 
 - /register
@@ -47,7 +51,7 @@ $ npm install -g yarn
 ```bash
 $ yarn install // install packages written in package.json file
 
-$ yarn run start:dev (run)
+$ yarn start:dev (run)
 ```
 
 ## NestJS
@@ -62,4 +66,4 @@ Under the hood, Nest makes use of Express, but also, provides compatibility with
 
 ## To Do
 
-Need to connect with apigateway, and have many-to-many relationship to community.
+Need to connect with apigateway.

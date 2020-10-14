@@ -1,20 +1,17 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Request, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Request, Res, UseGuards, Query } from '@nestjs/common';
 import { Response } from 'express';
 
 import { LocalAuthGuard } from './../auth/local-auth.guard';
 import { JwtAuthGuard } from './../auth/jwt-auth.guard';
 import { AuthService } from './../auth/auth.service';
 import { UsersService } from './users.service';
-import { UsercommService } from './../usercomm/usercomm.service';
 import { CreateUserDto, RegisterUserDto } from './user.dto';
-import { CommunityDto } from './../usercomm/usercomm.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
-    private usercommService: UsercommService,
   ) { }
 
   @Post('')
@@ -95,6 +92,26 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
+  // @UseGuards(AuthGuard('local'))
+  @Post('id')
+  async getIdByName(@Res() res, @Body() body) {
+    const id = await this.usersService.getOneUserIdByName(body.username);
+    if (!id)
+    return res
+      .status(HttpStatus.NOT_FOUND)
+      .json({
+        status: 404,
+        message: "User not found!",
+        data: null,
+      });
+    return res.status(HttpStatus.OK).json({
+      status: 200,
+      message: "Get user's id successful!",
+      data: id,
+    });
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(@Res() res, @Body() createUserDto: CreateUserDto, @Param("id") _id: string) {
     const user = await this.usersService.updateOneUser(_id, createUserDto);
@@ -129,70 +146,6 @@ export class UsersController {
       status: 200,
       message: "Delete user successful",
       data: user,
-    });
-  }
-
-  @Post('community')
-  async createComm(@Res() res: Response, @Body() communityDto: CommunityDto) {
-    const usercomm = await this.usercommService.createComm(communityDto);
-    return res.status(HttpStatus.CREATED).json({
-      status: 201,
-      message: "Created successful!",
-      data: usercomm
-    });
-  }
-
-  @Get('community/:userid')
-  async getAllByUser(@Res() res, @Param('userid') userid: string) {
-    const comms = await this.usercommService.getAllCommunityByUserid(userid);
-    if (!comms)
-      return res
-        .status(HttpStatus.NOT_FOUND)
-        .json({
-          status: 404,
-          message: "Can't find any community!",
-          data: null,
-        });
-    return res.status(HttpStatus.OK).json({
-      status: 200,
-      message: "Get user's community list successful!",
-      data: comms,
-    });
-  }
-
-  @Get('community/:commid')
-  async getAllByComm(@Res() res, @Param('commid') commid: string) {
-    const users = await this.usercommService.getAllUserByCommid(commid);
-    if (!users)
-      return res
-        .status(HttpStatus.NOT_FOUND)
-        .json({
-          status: 404,
-          message: "Can't find any user!",
-          data: null,
-        });
-    return res.status(HttpStatus.OK).json({
-      status: 200,
-      message: "Get this community's user list successful!",
-      data: users,
-    });
-  }
-
-  @Delete(':userid/:commid')
-  async deleteOneComm(@Res() res, @Param('userid') userid: string, @Param('commid') commid: string,) {
-    const usercomm = await this.usercommService.deleteOneUserComm({userid, commid});
-    if (!usercomm)
-      return res
-        .status(HttpStatus.NOT_FOUND)
-        .json({
-          status: 404,
-          message: "This record not found!",
-          data: null,
-        });
-    return res.status(HttpStatus.OK).json({
-      status: 200,
-      message: "Delete successful",
-      data: usercomm,
     });
   }
 }
