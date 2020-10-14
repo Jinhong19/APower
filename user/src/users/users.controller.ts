@@ -1,17 +1,17 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Request, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Request, Res, UseGuards, Query } from '@nestjs/common';
 import { Response } from 'express';
 
 import { LocalAuthGuard } from './../auth/local-auth.guard';
 import { JwtAuthGuard } from './../auth/jwt-auth.guard';
 import { AuthService } from './../auth/auth.service';
 import { UsersService } from './users.service';
-import { CreateUserDto, RegisterUserDto, SigninDto } from './user.dto';
+import { CreateUserDto, RegisterUserDto } from './user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private usersService: UsersService,
-    private authService: AuthService
+    private authService: AuthService,
   ) { }
 
   @Post('')
@@ -88,6 +88,26 @@ export class UsersController {
       status: 200,
       message: "Get user successful!",
       data: user,
+    });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  // @UseGuards(AuthGuard('local'))
+  @Post('id')
+  async getIdByName(@Res() res, @Body() body) {
+    const id = await this.usersService.getOneUserIdByName(body.username);
+    if (!id)
+    return res
+      .status(HttpStatus.NOT_FOUND)
+      .json({
+        status: 404,
+        message: "User not found!",
+        data: null,
+      });
+    return res.status(HttpStatus.OK).json({
+      status: 200,
+      message: "Get user's id successful!",
+      data: id,
     });
   }
 

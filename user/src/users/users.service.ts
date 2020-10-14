@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from "bcrypt";
 
 import { User, UserDocument } from './user.schema';
-import { CreateUserDto } from './user.dto';
+import { CreateUserDto} from './user.dto';
 
 @Injectable()
 export class UsersService {
@@ -34,7 +34,7 @@ export class UsersService {
     return user;
   }
 
-  async getOneUserByNamePassword({username, password}): Promise<User | undefined> {
+  async getOneUserByNamePassword(username, password): Promise<User | undefined> {
     const user = await this.model.findOne({ name: username }).exec();
 
     // check account found and verify password
@@ -52,6 +52,20 @@ export class UsersService {
 
     // check account found and verify password
     if (!user || !bcrypt.compareSync(password, user.password)) {
+        // authentication failed
+        return null;
+    } else {
+        // authentication successful
+        return user._id;
+    }
+  }
+
+
+  async getOneUserIdByName(username: string): Promise<string | undefined> {
+    const user = await this.model.findOne({ name: username }).exec();
+
+    // check account found and verify password
+    if (!user) {
         // authentication failed
         return null;
     } else {
