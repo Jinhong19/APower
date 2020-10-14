@@ -38,6 +38,14 @@ Finished creating apis for storing related users' id and communities's id. After
 
 ![deleteoneuser](/user/pic/deleteonuser.png)
 
+- /usercomm
+
+![assignonerelationship](/user/pic/assignonerelationship.png)
+
+- /usercomm/id (use Query)
+
+![getspecificidbyuseridandcommid](/user/pic/getspecificid.png)
+
 ## Run
 
 - **Install Yarn:**
