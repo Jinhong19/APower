@@ -12,7 +12,7 @@ router.post('/create', async function(req,res){
         if (result) // exist
             res.send('community name already exist');
         else{ // not exist, create community
-            community.create_Community(req.body.communityName, req.body.creator, req.body.detial, req.body.public, req.body.rulebook);
+            community.create_Community(req.body.communityName, req.body.creator, req.body.detail, req.body.public, req.body.rulebook);
             res.send('community create success');
         }
     });
