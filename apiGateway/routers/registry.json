@@ -1,16 +1,28 @@
 {
     "services": {
+        "dice": {
+            "apiName": "dice",
+            "host": "http://localhost",
+            "port": 3005,
+            "url": "http://localhost:3005/" 
+        },
         "testapi": {
             "apiName": "testapi",
             "host": "http://localhost",
             "port": 3001,
             "url": "http://localhost:3001/"
         },
-        "usersapi": {
-            "apiName": "usersapi",
+        "user": {
+            "apiName": "user",
             "host": "http://localhost",
-            "port": 3002,
-            "url": "http://localhost:3002/"
+            "port": 3008,
+            "url": "http://localhost:3008/"
+        },
+        "community": {
+            "apiName": "community",
+            "host": "http://localhost",
+            "port": 3004,
+            "url": "http://localhost:3004/" 
         }
     }
 }

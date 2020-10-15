@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node ./index.js",
     "testapi": "nodemon ./testapi.js",
-    "usersapi": "nodemon ./usersapi.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./index.js"
   },

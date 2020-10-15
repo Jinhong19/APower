@@ -7,6 +7,7 @@ const fs = require("fs");
 
 // .all takes all kinds of request POST, GET ...
 router.all("/:apiName/:path", (req, res) => {
+  console.log(req.body)
   console.log("called " + req.params.apiName);
   //check if the api exist in registry
   if (registry.services[req.params.apiName]) {
