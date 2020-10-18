@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-var url = 'mongodb://localhost/communityDatabase';
+require('dotenv').config()
+
+const url = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster1.ieadu.mongodb.net/community?retryWrites=true&w=majority`;
 
 mongoose.connect(url, {
     useNewUrlParser: true,
@@ -7,7 +9,7 @@ mongoose.connect(url, {
     useCreateIndex: true,
     useUnifiedTopology: true
 });
-let db = mongoose.connection;
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
     console.log("Connected to MongoDB Community database.");
