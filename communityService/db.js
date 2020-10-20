@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-var url = 'mongodb://localhost/communityDatabase';
+var url = 'mongodb+srv://apower:apowerpassword@cluster1.ieadu.mongodb.net/community?retryWrites=true&w=majority';
 
 mongoose.connect(url, {
     useNewUrlParser: true,
