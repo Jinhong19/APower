@@ -24,6 +24,25 @@ router.all("/:apiName/:path", (req, res) => {
   }
 });
 
+router.all("/:apiName/:path/:path2", (req, res) => {
+  console.log("called " + req.params.apiName);
+  //check if the api exist in registry
+  if (registry.services[req.params.apiName]) {
+    url = registry.services[req.params.apiName].url + req.params.path + "/" + req.params.path2;
+    console.log(url);
+    axios({
+      method: req.method,
+      url,
+      headers: req.headers,
+      data: req.body,
+    }).then((response) => {
+      res.send(response.data);
+    });
+  } else {
+    res.send("API name doesn't exist");
+  }
+});
+
 //Auto register for new api
 // following code to use above post request:
 // curl -X POST -d '{"apiName": "test","host": "http://localhost","port": 3001,"url": "http://localhost:3001/"}'
