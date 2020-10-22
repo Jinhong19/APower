@@ -1,3 +1,4 @@
+const { models, modelNames } = require("mongoose");
 const db = require("../db");
 
 const Schema = db.Schema;
@@ -54,9 +55,17 @@ async function renameRulebook(communityId,newName){
     })
 }
 
-async function updateStoryIdList(communityId,storyId){
+async function addStory(communityId,storyId){
     const Rulebook = db.model('Rulebook', rulebookSchema);
     Rulebook.findOneAndUpdate({'communityId':communityId}, {$push : {'storyIdList':storyId}}, await function (err, suceess){
+        if (err) return handleError(err);
+        else return 'success';
+    })
+}
+
+async function removeStory(communityId,storyId){
+    const Rulebook = db.model('Rulebook', rulebookSchema);
+    Rulebook.findOneAndUpdate({'communityId':communityId}, {$pull : {'storyIdList':storyId}}, await function (err, suceess){
         if (err) return handleError(err);
         else return 'success';
     })
@@ -68,4 +77,5 @@ module.exports.create_Rulebook = createRulebook;
 module.exports.delete_Rulebook = deleteRulebook;
 module.exports.update_Rulebook = updateRulebook;
 module.exports.rename_Rulebook = renameRulebook;
-module.exports.update_StoryIdList = updateStoryIdList
+module.exports.add_Story = addStory;
+module.exports.remove_Story = removeStory;
