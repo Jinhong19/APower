@@ -8,7 +8,8 @@ const rulebookSchema = new Schema({
         data : {type:Buffer, require:true},
         encoding : {type:String, require:true},
         size: {type:Number, require:true}
-    }
+    },
+    storyIdList: [{type:String, require:true}]
 }, {
 });
 
@@ -17,7 +18,8 @@ async function createRulebook(communityId, newRulebook){
 
     const rulebook = new Rulebook({
         communityId: communityId,
-        rulebook : newRulebook
+        rulebook : newRulebook,
+        storyIdList: []
     });
 
     await rulebook.save(function (err){
@@ -25,5 +27,36 @@ async function createRulebook(communityId, newRulebook){
     })
 }
 
+async function deleteRulebook(communityId){
+    const Rulebook = db.model('Rulebook', rulebookSchema);
+
+    Rulebook.deleteOne({'communityId':communityId}, await function(err){
+        if (err) return handleError(err);
+        else return 'sucess';
+    })
+}
+
+async function updateRulebook(communityId,newRulebook){
+    const Rulebook = db.model('Rulebook', rulebookSchema);
+
+    Rulebook.findOneAndUpdate({'communityId':communityId}, {'rulebook':newRulebook}, await function (err, suceess){
+        if (err) return handleError(err);
+        else return 'success';
+    })
+}
+
+async function renameRulebook(communityId,newName){
+    const Rulebook = db.model('Rulebook', rulebookSchema);
+
+    Rulebook.findOneAndUpdate({'communityId':communityId}, {'rulebook.name':newName}, await function (err, suceess){
+        if (err) return handleError(err);
+        else return 'success';
+    })
+}
+
+
 module.exports.rulebook = db.model('Rulebook', rulebookSchema);
 module.exports.create_Rulebook = createRulebook;
+module.exports.delete_Rulebook = deleteRulebook;
+module.exports.update_Rulebook = updateRulebook;
+module.exports.rename_Rulebook = renameRulebook;
