@@ -19,4 +19,6 @@ app.listen(port, function() {
 });
 
 let rulebookRouter = require('./routes/rulebook');
+let storyRouter = require('./routes/story');
 app.use('/', rulebookRouter);
+app.use('/', storyRouter);
