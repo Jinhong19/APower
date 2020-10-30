@@ -55,17 +55,17 @@ async function renameRulebook(communityId,newName){
     })
 }
 
-async function addStory(communityId,storyId){
+async function addStory(rulebookId,storyId){
     const Rulebook = db.model('Rulebook', rulebookSchema);
-    Rulebook.findOneAndUpdate({'communityId':communityId}, {$push : {'storyIdList':storyId}}, await function (err, suceess){
+    Rulebook.findOneAndUpdate({'_id':rulebookId}, {$push : {'storyIdList':storyId}}, await function (err, suceess){
         if (err) return handleError(err);
         else return 'success';
     })
 }
 
-async function removeStory(communityId,storyId){
+async function removeStory(rulebookId,storyId){
     const Rulebook = db.model('Rulebook', rulebookSchema);
-    Rulebook.findOneAndUpdate({'communityId':communityId}, {$pull : {'storyIdList':storyId}}, await function (err, suceess){
+    Rulebook.findOneAndUpdate({'_id':rulebookId}, {$pull : {'storyIdList':storyId}}, await function (err, suceess){
         if (err) return handleError(err);
         else return 'success';
     })
