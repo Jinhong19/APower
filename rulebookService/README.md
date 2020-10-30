@@ -45,9 +45,9 @@ Now, open up a web browser and enter http://localhost:3005 in the URL bar.
 ![POST_uploadStory](exampleImage/POST_uploadStory.PNG)
 ![POST_uploadStory](exampleImage/POST_uploadStory2.PNG)
 
-* /removeStory
+* /deleteStory
 
-![POST_removeStory](exampleImage/POST_removeStory.PNG)
+![POST_deleteStory](exampleImage/POST_deleteStory.PNG)
 
 * /renameStory
 
