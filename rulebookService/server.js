@@ -20,5 +20,7 @@ app.listen(port, function() {
 
 let rulebookRouter = require('./routes/rulebook');
 let storyRouter = require('./routes/story');
+let skillRouter = require('./routes/skill');
 app.use('/', rulebookRouter);
 app.use('/', storyRouter);
+app.use('/', skillRouter);
