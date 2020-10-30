@@ -6,15 +6,16 @@ const story = require('../model/story');
 var router = express.Router();
 
 router.get('/story', function(req,res){
-    res.sendFile(__dirname  + '/upload.html');
+    res.sendFile(__dirname  + '/uploadStory.html');
 })
 
 router.post('/uploadStory', function(req,res){
     var Story = story.story;
     var Rulebook = rulebook.rulebook;
 
-    req.body.rulebookId = "5f912feba248c72158fd6ed8"
-    req.body.storyName = "123456"
+    console.log(req.body.rulebookId);
+    //req.body.rulebookId = "5f912feba248c72158fd6ed8"
+    //req.body.storyName = "123456"
 
     console.log(req.body.rulebookId);
     
@@ -23,8 +24,10 @@ router.post('/uploadStory', function(req,res){
             if(req.files){
                 if(req.files.file.name.endsWith(".pdf")){
                     Story.exists({'rulebookId':req.body.rulebookId , 'storyName':req.body.storyName}, function(err, result){
-                        if (result)
+                        if (result){
+                            res.status(400);
                             res.send('Story already exists');
+                        }
                         else{
                             var r = {
                                 name : req.files.file.name,
@@ -37,14 +40,20 @@ router.post('/uploadStory', function(req,res){
                         }
                     })
                 }
-                else
+                else{
+                    res.status(400);
                     res.send('Story must be a pdf file');
+                }
             }
-            else
+            else{
+                res.status(400);
                 res.send('Error: no file uploaded');
+            }
         }
-        else
+        else{
+            res.status(400);
             res.send("community deosn't  exists");
+        }
     })
 })
 
@@ -52,13 +61,15 @@ router.post('/deleteStory', function(req,res){
     var Story = story.story;
     var Rulebook = rulebook.rulebook;
     
-    Story.exists({'rulebookId':req.body.rulebookId , 'storyName':req.body.stroyName}, function(err, result){
+    Story.findOne({'rulebookId':req.body.rulebookId , 'storyName':req.body.storyName}, function(err, result){
         if(result){
-            story.delete_Story(req.body.rulebookId, req.body.stroyName);
+            story.delete_Story(req.body.rulebookId, result._id);
             res.send('Story delete success');
         }
-        else
+        else{
+            res.status(400);
             res.send('unable to delete story');
+        }
     })
 })
 
@@ -69,16 +80,20 @@ router.post('/renameStory', function(req,res){
         res.send("new story name must be different than the old story name");
 
     Story.exists({'rulebookId':req.body.rulebookId , 'storyName':req.body.newName}, function(err, result){
-        if(result)
+        if(result){
+            res.status(400);
             res.send('new story name already exists')
+        }
         else{
             Story.find({'rulebookId':req.body.rulebookId , 'storyName':req.body.storyName}, function(err, result){
                 if(result.length > 0){
                     story.rename_Story(result[0]._id, req.body.newName);
                     res.send('Story rename success');
                 }
-                else
+                else{
+                    res.status(400);
                     res.send('story does not exists');
+                }
             })
         }
     })
