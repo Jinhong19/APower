@@ -1,0 +1,37 @@
+{
+  "name": "apower",
+  "version": "1.0.0",
+  "description": "Team member:",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "testapi": "nodemon ./testapi.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jinhong19/APower.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jinhong19/APower/issues"
+  },
+  "homepage": "https://github.com/Jinhong19/APower#readme",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.17.1",
+    "fs": "0.0.1-security",
+    "mongoose": "^5.10.7",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
