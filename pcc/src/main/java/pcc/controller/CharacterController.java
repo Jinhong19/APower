@@ -1,32 +1,31 @@
 package pcc.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import pcc.dao.CharacterRepository;
-import pcc.dao.ItemRepository;
-import pcc.dao.SpellRepository;
 import pcc.model.Character;
-import pcc.model.Item;
-import pcc.model.Spell;
+import pcc.service.CharacterService;
 
 @RestController
 @RequestMapping("/characters")
 public class CharacterController {
     private CharacterRepository characterRepository;
-    private SpellRepository spellRepository;
+    private CharacterService characterService;
     private Logger logger = Logger.getLogger(CharacterController.class);
-    private ItemRepository itemRepository;
 
-    public CharacterController(CharacterRepository characterRepository, SpellRepository spellRepository, ItemRepository itemRepository) {
+    public CharacterController(CharacterRepository characterRepository, CharacterService characterService) {
         this.characterRepository = characterRepository;
-        this.spellRepository = spellRepository;
-        this.itemRepository = itemRepository;
+        this.characterService = characterService;
     }
 
     @GetMapping("{id}")
@@ -70,53 +69,15 @@ public class CharacterController {
             @PathVariable("spellId") String sid) {
         logger.info("Add Spell " + sid + " to " + cid);
 
-        Optional<Character> characterOp = this.characterRepository.findById(cid);
+        return characterService.addSpell(cid, sid);
 
-        if (characterOp.isPresent()) {
-            Character character = characterOp.get();
-            Optional<Spell> spellOp = this.spellRepository.findById(sid);
-            if (spellOp.isPresent()) {
-                Spell spell = spellOp.get();
-                List<Spell> spells = character.getSpells();
-                if (spells == null) spells = new ArrayList<>();
-                spells.add(spell);
-                character.setSpells(spells);
-                logger.debug(character.toString());
-                characterRepository.save(character);
-                return ResponseEntity.ok("Spell Added");
-            } else {
-                return ResponseEntity.badRequest().body("Spell Not Found");
-            }
-        } else {
-            return ResponseEntity.badRequest().body("Character Not Found");
-        }
     }
 
     @PostMapping("/{characterId}/items/{itemId}")
-    public ResponseEntity<String> addItem(@PathVariable("characterId") String cid,
-            @PathVariable("itemId") String sid) {
-        logger.info("Add Item " + sid + " to " + cid);
+    public ResponseEntity<String> addItem(@PathVariable("characterId") String cid, @PathVariable("itemId") String iid) {
+        logger.info("Add Item " + iid + " to " + cid);
 
-        Optional<Character> characterOp = this.characterRepository.findById(cid);
-
-        if (characterOp.isPresent()) {
-            Character character = characterOp.get();
-            Optional<Item> itemOp = this.itemRepository.findById(sid);
-            if (itemOp.isPresent()) {
-                Item item = itemOp.get();
-                List<Item> items = character.getItems();
-                if (items == null) items = new ArrayList<>();
-                items.add(item);
-                character.setItems(items);
-                logger.debug(character.toString());
-                characterRepository.save(character);
-                return ResponseEntity.ok("Item Added");
-            } else {
-                return ResponseEntity.badRequest().body("Item Not Found");
-            }
-        } else {
-            return ResponseEntity.badRequest().body("Character Not Found");
-        }
+        return characterService.addItem(cid, iid);
     }
 
     @DeleteMapping("/{id}")
