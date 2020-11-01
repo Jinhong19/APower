@@ -20,7 +20,7 @@ public class ItemController {
         this.itemRepository = itemRepository;
     }
 
-    @GetMapping()
+    @GetMapping
     public List<Item> getAll() {
         logger.info("Get All");
 

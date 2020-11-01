@@ -20,7 +20,7 @@ public class SpellController {
         this.spellRepository = spellRepository;
     }
 
-    @GetMapping()
+    @GetMapping
     public List<Spell> getAll() {
         logger.info("Get All");
 
