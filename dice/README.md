@@ -5,7 +5,7 @@ This is a service tamplate, can be used for testing
 ## Run
 
 run `npm run start`  
-go to http://localhost:3005/api-doc
+go to http://localhost:3003/api-doc
 
 ## Endpoint
 
