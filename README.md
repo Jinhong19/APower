@@ -31,4 +31,16 @@ We aim to create an easily scalable application by using microservices. The MVP 
 | pccService | 8080 | Manages player created content | see readme.md in pcc |
 
 
-## How the Application Addresses Scalability
+## How the Application Addresses Scalability  
+We will be using docker images and containers to addresses scalability concerns for our project. 
+- Make each container to be its own application (services)
+- Containers can have their own version of dependencies, so decouple each service. When introducing new features. Thus, we can include different versions of dependencies, since containers work separately, so we don’t have to update working services.
+- Destroy containers without stopping other containers working.
+- We can replicate as many containers as we want, and they don’t interfere with other containers by using images
+- When deploying to a server, as long as the server has docker installed, it can run the containers.  
+
+We have a separate database for each service. 
+- Although we are only using MongoDB for now, we can switch to use other database technologies based on what works best for the data in a service.
+- Depending on the type of the data, we can use both relational and nonrelational databases in our application, since we separated databases.
+- By using a separate database It will help achieve consistency across different services.
+
