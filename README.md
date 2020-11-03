@@ -1,7 +1,19 @@
-## Script World
+# Script World
 
-# overview
+## overview
 Team Name:APower
+Script World is a text based rpg website that lets users play rpg stories with people online. Users will be able to create and join communities with their friends, customise their own characters for the game, and even create their own rpg stories to upload to their community according to the community rulebook. Users also have a specialised chat interface to communicate with others and invoke builtin functions during gameplay.
+
+We aim to create an easily scalable application by using microservices. 
+The MVP features we are working on are:
+Implement basic chat functionality with additional functions such as builtin dice.
+Allow users join a community that shares a rulebook
+Let users create and change rulebooks and stories.
+Let users create characters with items and spells for a rulebook.
+Implement authentication
+
+Team Member:
+
 
 ## Project Description
 
