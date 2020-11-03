@@ -11,9 +11,12 @@ We aim to create an easily scalable application by using microservices. The MVP 
 - Let users create characters with items and spells for a rulebook.
 - Implement authentication
 
-Team Member:
+## Team Member:
 - Jinhong Gan
+- Jiachao Chen
 
+
+  
 ## System Design
 
 ## Current Services
