@@ -18,6 +18,7 @@ We aim to create an easily scalable application by using microservices. The MVP 
 - Jinhong Gan
 - Jiachao Chen
 - Saswata Mishra
+- Kashish Somani
 
 ## System Design
 
