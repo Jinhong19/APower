@@ -43,7 +43,6 @@ We have a separate database for each service.
 
 - Although we are only using MongoDB for now, we can switch to use other database technologies based on what works best for the data in a service.
 - Depending on the type of the data, we can use both relational and nonrelational databases in our application, since we separated databases.
-- By using a separate database It will help achieve consistency across different services.
 
 ## Current Services
 
