@@ -4,7 +4,7 @@
 
 | service | used port | description | api document |
 | --- | --- | --- | --- |
-| dice | 3005 | This is a service tamplate, can be used for testing | |
+| [dice](dice) | 3005 | This is a service tamplate, can be used for testing | |
 | apiGateway | 3000 | Service manages the routing to all microservices API | |
 | rulebookService | 3005 | Rulebook service manages all rulebook,stories,skills creation and access, and handle incoming http request | [https://docs.google.com/document/d/1M7XB4I3xLwcT0WQM_r4JxBjN55Go36tNeMqNGlQnwq8/edit#](https://docs.google.com/document/d/1M7XB4I3xLwcT0WQM_r4JxBjN55Go36tNeMqNGlQnwq8/edit#) |
 | communityService | 3004 | Community service manages all community data and handle incoming http request | [https://docs.google.com/document/d/14wjDsvP9NK1BdJTZtBmN3OIEjCKfoN8HKU38hzlWan8/edit#](https://docs.google.com/document/d/14wjDsvP9NK1BdJTZtBmN3OIEjCKfoN8HKU38hzlWan8/edit#) |
