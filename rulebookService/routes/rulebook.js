@@ -9,6 +9,20 @@ router.get('/', function(req,res){
     res.sendFile(__dirname  + '/uploadRulebook.html');
 });
 
+router.get('/getRulebook', function(req,res){
+    var Rulebook = rulebook.rulebook;
+
+    Rulebook.findOne({'communityId' : req.body.communityId}, function(err, result){
+        if(result){
+            res.send(result);
+        }
+        else{
+            res.status(400);
+            res.send("community deosn't exists");
+        }
+    })
+});
+
 router.post('/create', function(req,res){
     var Rulebook = rulebook.rulebook;
 
@@ -109,7 +123,7 @@ router.post('/renameRulebook', function(req,res){
         }
         else{
             res.status(400);
-            res.send("community deosn't  exists");
+            res.send("community doesn't  exists");
         }
     });
 })
