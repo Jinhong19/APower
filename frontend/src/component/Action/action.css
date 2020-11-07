@@ -1,0 +1,32 @@
+
+.action {
+    color:red;
+    padding-left: 10px;
+}
+
+.actionLabel {
+    background-color: white;
+    height: 10%;
+    width: 100%;
+    text-align: center;
+}
+
+.userActionList {
+    height: 95%;
+    width: 100%;
+}
+
+.actionContainer {
+    display: flex;
+    flex-direction: column; 
+    height: 100%;
+    width: 100%;
+    background-color: rgb(187, 173, 173);
+}
+
+.userActionScroll {
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    direction:ltr;
+}
