@@ -18,6 +18,8 @@ router.all("/:apiName/:path", (req, res) => {
       data: req.body,
     }).then((response) => {
       res.send(response.data);
+    }).catch((error) => {
+      console.log(error);
     });
   } else {
     res.send("API name doesn't exist");

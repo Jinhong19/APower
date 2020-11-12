@@ -11,3 +11,11 @@ In directory apiGateway
 
 ## TODO  
 Implement: security, authentication, authorization
+
+How to change registry (follow this):
+"dice": {
+            "apiName": "dice",
+            "host": "http://host.docker.internal",
+            "port": 3003,
+            "url": "http://host.docker.internal:3003/" 
+        }

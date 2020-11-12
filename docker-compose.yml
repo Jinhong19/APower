@@ -1,0 +1,10 @@
+version: "3"
+services:
+  apigateway:
+    image: api-gateway
+    ports:
+      - "3000:3000"
+  dice:
+    image: dice-service
+    ports:
+      - "3003:3003"

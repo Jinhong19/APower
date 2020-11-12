@@ -2,9 +2,9 @@
     "services": {
         "dice": {
             "apiName": "dice",
-            "host": "http://localhost",
-            "port": 3005,
-            "url": "http://localhost:3005/" 
+            "host": "http://host.docker.internal",
+            "port": 3003,
+            "url": "http://host.docker.internal:3003/" 
         },
         "testapi": {
             "apiName": "testapi",
