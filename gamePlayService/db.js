@@ -1,6 +1,8 @@
   
 const mongoose = require('mongoose');
-var url = 'mongodb+srv://apower:apowerpassword@cluster1.ieadu.mongodb.net/rulebook?retryWrites=true&w=majority';
+
+console.log(process.env.DB_USERNAME);
+var url = 'mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster1.ieadu.mongodb.net/gamePlay?retryWrites=true&w=majority';
 
 mongoose.connect(url, {
     useNewUrlParser: true,

@@ -6,30 +6,47 @@ const axios = require('axios');
 var router = express.Router();
 
 router.post('/createGameRoom', function(req,res){
-    const Storyroom = storyRoom.storyRoom;
+    var Storyroom = storyRoom.storyRoom;
 
+    var err = "";
+    var errFlag = false;
+    if(req.body.hostId == undefined){
+        errFlag = true;
+        err = err.concat("hostId cannot be undefined.\n");
+    }
+    if(req.body.storyId == undefined){
+        errFlag = true;
+        err = err.concat("storyId cannot be undefined.\n");
+    }
+    if(req.body.rulebookId == undefined){
+        errFlag = true;
+        err = err.concat("rulebookId cannot be undefined.\n");
+    }
+
+    if(errFlag){
+        res.status(400).send(err);
+        return;
+    }
+    
+    chatHistoryId = "aaaaa";
     var password = genPassword.generate({length:20, numbers:true});
-    console.log(password)
-    res.send("game room already exists");
-
-    axios.get('http://localhost:3020/get')
-        .then(function (response) {
-            console.log(response.data);
-        })
-        .catch(function (err) {
-            console.log("err");
-        })
-
-    /*Storyroom.exists({"hostId":req.hostId, "storyId":storyId}, function(err, result){
+    
+    Storyroom.find({}, function(err, result){
         if(result){
-            res.status(400);
-            res.send("game room already exists");
+            var flag = true;
+            while(flag){
+                var flag = false;
+                for (var i in result){
+                    if(result[i] == password){
+                        flag = true;
+                    }
+                }
+                var password = genPassword.generate({length:20, numbers:true});
+            }
         }
-        else{
-            var password = genPassword.generate({length:20, numbers:true});
-            console.log(password)
-        }
-    })*/
+    });
+    storyRoom.create_Storyroom(req.body.hostId,password,req.body.storyId,chatHistoryId,req.body.rulebookId);
+    res.status(200).send(password);
 });
 
 module.exports = router;

@@ -4,23 +4,26 @@ const db = require("../db");
 const Schema = db.Schema;
 const storyRoomSchema = new Schema({
     storyId:{type:String, require:true},
+    rulebookId:{type:String, require:true},
     password:{type:String, require:true},
     chatHistoryId:{type:String, require:true},
     hostId:{type:String, require:true},
     maxMember:{type:Number, require:true}
 })
 
-async function createStoryRoom(hostId,password,storyId,chatHistoryId){
+async function createStoryRoom(hostId,password,storyId,chatHistoryId,rulebookId){
     const Storyroom = db.model('Storyroom', storyRoomSchema);
 
     const storyRoom = new Storyroom({
         storyId:storyId,
         password:password,
         hostId:hostId,
-        chatHistoryId:chatHistoryId
+        chatHistoryId:chatHistoryId,
+        rulebookId:rulebookId
     })
+    console.log("aaaaaaaaaaaaaaa");
 
-    await rulebook.save(function (err){
+    await storyRoom.save(function (err){
         if (err) return handleError(err);
     })
 }
