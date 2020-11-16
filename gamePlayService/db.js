@@ -1,8 +1,8 @@
   
 const mongoose = require('mongoose');
+require('dotenv').config()
 
-console.log(process.env.DB_USERNAME);
-var url = 'mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster1.ieadu.mongodb.net/gamePlay?retryWrites=true&w=majority';
+const url = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster1.ieadu.mongodb.net/gamePlay?retryWrites=true&w=majority`;
 
 mongoose.connect(url, {
     useNewUrlParser: true,
