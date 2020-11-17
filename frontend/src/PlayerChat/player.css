@@ -1,0 +1,28 @@
+.outerContainer {
+    background-color: slategray;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.innerContainer {
+    display: flex;
+    flex-direction: row;
+    height: 80%;
+}
+
+.leftContainer {
+    width: 20%;
+    height: 100%;
+}
+
+.middleContainer {
+    width: 60%;
+    height: 85%;
+}
+
+.rightContainer {
+    width: 20%;
+    height: 100%;
+}
+
