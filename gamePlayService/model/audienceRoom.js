@@ -4,15 +4,15 @@ const db = require("../db");
 const Schema = db.Schema;
 const audienceRoomSchema = new Schema({
     password:{type:String, require:true},
-    chatHistoryId:{type:String, require:true},
+    audienceList:{type:String, require:true},
 })
 
-async function createAudienceRoom(password,chatHistoryId){
+async function createAudienceRoom(password,audienceList){
     const Audienceroom = db.model('AudienceRoom', audienceRoomSchema);
 
     const audienceRoom = new Audienceroom({
         password:password,
-        chatHistoryId:chatHistoryId
+        audienceList:audienceList
     })
 
     await audienceRoom.save(function (err){

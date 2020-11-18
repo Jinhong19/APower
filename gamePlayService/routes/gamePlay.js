@@ -183,4 +183,28 @@ router.post("/assignHost", function(req,res){
     })
 });
 
+router.get("/roomMember", function(req,res){
+    var Storyroom = storyRoom.storyRoom;
+    password = "";
+
+    if(req.query.password == undefined){
+        password = req.body.password;
+    }
+    else{
+        password = req.query.password;
+    }
+
+    Storyroom.findOne({"password":password}, function(err, result){
+        if(result){
+            temp = result.playerIdList;
+            temp.push(result.hostId);
+            res.status(200).send(temp);
+        }
+        else{
+            res.status(400).send("game room doesn't exists");
+        }
+    })
+
+});
+
 module.exports = router;
