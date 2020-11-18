@@ -239,4 +239,37 @@ router.get('/story', function(req, res){
     })
 })
 
+router.get('/skill', function(req, res){
+    var Storyroom = storyRoom.storyRoom;
+    password = "";
+
+    if(req.query.password == undefined){
+        password = req.body.password;
+    }
+    else{
+        password = req.query.password;
+    }
+
+    Storyroom.findOne({"password":password}, function(err, result){
+        if(result){
+            axios.get('http://localhost:3005/allSkill', {
+                params: {
+                    rulebookId:result.rulebookId
+                }
+            })
+            .then(function (response){
+                console.log("aaa");
+                res.status(200).send(response.data);
+            })
+            .catch(function (error){
+                console.log("bbbbbbbbbbbbbbbb");
+                res.status(400).send("skill list doesn't exists");
+            })
+        }
+        else{
+            res.status(400).send("game room doesn't exists");
+        }
+    })
+})
+
 module.exports = router;
