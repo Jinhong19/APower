@@ -99,4 +99,43 @@ router.post('/renameStory', function(req,res){
     })
 })
 
+router.get('/allStoryId', function(req,res){
+    var Story = story.story;
+
+    Story.find({'rulebookId':req.body.rulebookId}, function(err, result){
+        if(result){
+            r = [];
+            for( var i in result){
+                r.push(result[i]._id);
+            }
+            res.status(200).send({"storyIdList":r});
+        }
+        else{
+            res.status(400).send("rulebook doesn't exstis");
+        }
+    })
+})
+
+router.get('/storyById', function(req,res){
+    var Story = story.story;
+    storyId = "";
+
+    if(req.query.storyId == undefined){
+        storyId = req.body.storyId;
+    }
+    else{
+        storyId = req.query.storyId;
+    }
+
+    Story.findOne({'_id':storyId}, function(err, result){
+        if(result){
+            console.log(result);
+            res.status(200).send({"storyName":result.storyName, "story":result.story});
+        }
+        else{
+            res.status(400).send("story doesn't exstis");
+        }
+    })
+})
+
 module.exports = router;
