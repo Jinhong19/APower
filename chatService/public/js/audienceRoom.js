@@ -83,6 +83,16 @@ socket.on('chatHistory', (message) =>{
     playerMessages.scrollTop = playerMessages.scrollHeight;
 });
 
+// story from server
+socket.on('story', (msg) => {
+    console.log(msg);
+
+    outputMessage({username:msg.username,time:msg.time,text:msg.story.storyName});
+    // Scroll down
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+})
+
+
 leave.addEventListener("submit", e => {
     e.preventDefault();
     console.log("aaaaaaaaaaaaaaaaaaa");
@@ -106,6 +116,10 @@ chatForm.addEventListener('submit', e => {
         return false;
     }
     console.log(msg);
+
+    if(msg == ".story"){
+        socket.emit('getStory', {room:room});
+    }
     // sent message to server
     socket.emit('clientMessage-Audience', {audienceRoom:room,username:username,message:msg});
 

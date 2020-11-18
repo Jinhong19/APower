@@ -19,7 +19,6 @@ var server = app.listen(port, function(){
 let io = socket(server)
 
 
-require('./socket/community.js')(io);
 require('./socket/story.js')(io);
 
 app.use(bodyParser.urlencoded({ extended: false}));

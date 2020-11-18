@@ -75,6 +75,15 @@ socket.on('disconnectUser', (msg) =>{
     chatMessages.scrollTop = chatMessages.scrollHeight;
 });
 
+// story from server
+socket.on('story', (msg) => {
+    console.log(msg);
+
+    outputMessage({username:msg.username,time:msg.time,text:msg.story.storyName});
+    // Scroll down
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+})
+
 
 // Message submit
 chatForm.addEventListener('submit', e => {
@@ -92,6 +101,9 @@ chatForm.addEventListener('submit', e => {
     if(msg.charAt(0) == "." && msg.charAt(1) == "d") {
         // request a dice roll 
         socket.emit('roll', {storyRoom:room,username:username});
+    }
+    else if(msg == ".story"){
+        socket.emit('getStory', {room:room});
     }
     // sent message to server
     socket.emit('clientMessage-Story', {storyRoom:room,username:username,message:msg});

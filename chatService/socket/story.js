@@ -42,6 +42,20 @@ module.exports = function(io) {
             })
         });
 
+        socket.on('getStory', msg=> {
+            axios.get('http://localhost:3010/story', {
+                params: {
+                    password:msg.room
+                }
+            })
+            .then(function (response){
+                socket.emit("story",{username:"System",time:currentTime(),story:response.data});
+            })
+            .catch(function (error){
+                socket.emit("Error",{username:"System",time:currentTime(),text:"unable to get story"});
+            })
+        })
+
         socket.on('clientMessage-Story', msg => {
             var History = history.history;
 
