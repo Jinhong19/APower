@@ -207,4 +207,36 @@ router.get("/roomMember", function(req,res){
 
 });
 
+router.get('/story', function(req, res){
+    var Storyroom = storyRoom.storyRoom;
+    password = "";
+
+    if(req.query.password == undefined){
+        password = req.body.password;
+    }
+    else{
+        password = req.query.password;
+    }
+
+    Storyroom.findOne({"password":password}, function(err, result){
+        if(result){
+            axios.get('http://localhost:3005/storyById', {
+                params: {
+                    storyId:result.storyId
+                }
+            })
+            .then(function (response){
+                console.log("aaa");
+                res.status(200).send(response.data);
+            })
+            .catch(function (error){
+                res.status(400).send("unable to get story");
+            })
+        }
+        else{
+            res.status(400).send("game room doesn't exists");
+        }
+    })
+})
+
 module.exports = router;
