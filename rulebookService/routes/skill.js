@@ -38,7 +38,7 @@ router.post('/addSkill', function(req,res){
             if(result){
                 Skill.exists({'rulebookId':req.body.rulebookId}, function(err, result){
                     if(result){
-                        Skill.exists({'rulebookId':req.body.rulebookId, 'skinList.name':req.body.skillName}, function(err, result){
+                        Skill.exists({'rulebookId':req.body.rulebookId, 'skillList.name':req.body.skillName}, function(err, result){
                             if(result){
                                 res.status(400);
                                 res.send('skill already exists');
@@ -92,6 +92,28 @@ router.post('/deleteSkillTemp', function(req,res){
             res.send("skill template doesn't exists");
         }
     })
+})
+
+router.get('/allSkill', function(req,res){
+    var Skill = skill.skill;
+
+    rulebookId = "";
+
+    if(req.query.rulebookId == undefined){
+        rulebookId = req.body.rulebookId;
+    }
+    else{
+        rulebookId = req.query.rulebookId;
+    }
+
+    Skill.findOne({"rulebookId":rulebookId}, function(err, result){
+        if(result){
+            res.status(200).send(result.skillList);
+        }
+        else{
+            res.status(400).send("skill list doesn't exists");
+        }
+    });
 })
 
 module.exports = router;
