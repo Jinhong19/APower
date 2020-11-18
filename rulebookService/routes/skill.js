@@ -108,6 +108,7 @@ router.get('/allSkill', function(req,res){
 
     Skill.findOne({"rulebookId":rulebookId}, function(err, result){
         if(result){
+            console.log("aaaaaaaaaaaaaaaaaaaaa");
             res.status(200).send(result.skillList);
         }
         else{
