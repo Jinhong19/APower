@@ -23,6 +23,29 @@ router.get('/getRulebook', function(req,res){
     })
 });
 
+router.get('/getRulebookById', function(req,res){
+    var Rulebook = rulebook.rulebook;
+
+    rulebookId = "";
+
+    if(req.query.rulebookId == undefined){
+        rulebookId = req.body.rulebookId;
+    }
+    else{
+        rulebookId = req.query.rulebookId;
+    }
+
+    Rulebook.findOne({'_id' : rulebookId}, function(err, result){
+        if(result){
+            res.send({rulebook:result.rulebook});
+        }
+        else{
+            res.status(400);
+            res.send("rulebook doesn't exists");
+        }
+    })
+});
+
 router.post('/create', function(req,res){
     var Rulebook = rulebook.rulebook;
 
