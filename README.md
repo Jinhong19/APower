@@ -54,6 +54,8 @@ We have a separate database for each service.
 | [communityService](communityService) | 3004 | Community service manages all community data and handle incoming http request | [https://docs.google.com/document/d/14wjDsvP9NK1BdJTZtBmN3OIEjCKfoN8HKU38hzlWan8/edit#](https://docs.google.com/document/d/14wjDsvP9NK1BdJTZtBmN3OIEjCKfoN8HKU38hzlWan8/edit#) |
 | [pcc](pcc) | 8080 | pcc service manages player created content | see readme.md in pcc |
 | [userService](user) | 3008 | Create users service by using NestJS framework (a progressive Node.js framework) with Typescript language. And using Passport and JWT for authentication | [https://github.com/Jinhong19/APower/blob/master/user/userDocumentation/userDoc.md](https://github.com/Jinhong19/APower/blob/master/user/userDocumentation/userDoc.md) |
+| [chatService](chatService) | 3020 | chatService manages all real time chat between client | |
+| [gamePlayService](gamePlayService) | 3010 | gmaePlayService manages all chat room | |
 
 ## Link
 Demo: https://drive.google.com/file/d/1ziqleJjWilCAn6oQQxksVZBHLtWB4qZD/view?usp=sharing
