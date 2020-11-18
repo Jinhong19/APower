@@ -5,7 +5,7 @@ const rulebook = require('../model/rulebook');
 const Schema = db.Schema;
 const skillSchema = new Schema({
     rulebookId: {type:String, require:true},
-    skinList:[{
+    skillList:[{
             name:{type:String, require:true},
             description:{type:String, require:true},
             initialSuccessRate:{type:Number, require:true},
@@ -18,7 +18,7 @@ async function create(rulebookId,skillName,description,initialSuccessRate){
 
     const s = new Skill({
         rulebookId : rulebookId,
-        skinList : [{
+        skillList : [{
                 name : skillName,
                 description : description,
                 initialSuccessRate : initialSuccessRate
@@ -39,7 +39,7 @@ async function addSkill(rulebookId,skillName,description,initialSuccessRate){
         initialSuccessRate : initialSuccessRate
     }
 
-    Skill.findOneAndUpdate({'rulebookId':rulebookId}, {$push : {'skinList':s}}, await function(err, result){
+    Skill.findOneAndUpdate({'rulebookId':rulebookId}, {$push : {'skillList':s}}, await function(err, result){
         if (err) return handleError(err);
         else return 'sucess';
     })
@@ -48,7 +48,7 @@ async function addSkill(rulebookId,skillName,description,initialSuccessRate){
 async function removeSkill(rulebookId,skillName){
     const Skill = db.model('Skill', skillSchema);
 
-    Skill.findOneAndUpdate({'rulebookId':rulebookId}, {$pull : {'skinList':{'name':skillName}}}, await function(err, result){
+    Skill.findOneAndUpdate({'rulebookId':rulebookId}, {$pull : {'skillList':{'name':skillName}}}, await function(err, result){
         if (err) return handleError(err);
         else return 'sucess';
     })
