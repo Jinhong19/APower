@@ -1,3 +1,4 @@
+
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const actionMessages = document.querySelector('.action-messages');
@@ -84,6 +85,12 @@ socket.on('story', (msg) => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 })
 
+socket.on('skill', (msg) => {
+    outputMessage(msg);
+    // Scroll down
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+})
+
 
 // Message submit
 chatForm.addEventListener('submit', e => {
@@ -104,6 +111,12 @@ chatForm.addEventListener('submit', e => {
     }
     else if(msg == ".story"){
         socket.emit('getStory', {room:room});
+    }
+    else if(msg == ".allskill"){
+        socket.emit('getAllSkill', {room:room,username:username});
+    }
+    else if(msg.substring(0,7) == ".skill-"){
+        socket.emit('getSkill', {room:room,username:username,skillName:msg.substring(7,msg.length)});
     }
     // sent message to server
     socket.emit('clientMessage-Story', {storyRoom:room,username:username,message:msg});
@@ -131,6 +144,9 @@ function outputMessage(message) {
     p.innerText = message.username;
     if(message.username == username){
         p.style.color = "blue";
+    }
+    else if(message.username == "System"){
+        p.style.color = "red";
     }
     else{
         p.style.color = "#132513";
