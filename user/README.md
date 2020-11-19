@@ -24,35 +24,8 @@ docker build -t ysha/apower-user:v3 .
 docker run -p 3008:3008 -d --name apower-user ysha/apower-user:v3
 ```
 
-### Postman examples
-
-- /register
-
-![register](/user/pic/register.png)
-
-- /login
-
-![login](/user/pic/login.png)
-
-- /
-
-![getallusers](/user/pic/allusers.png)
-
-- /:id
-
-![getoneuser](/user/pic/oneuser.png)
-
-- /:id **after 2 minutes, the baerer token was invalidated**
-
-![deleteoneuser](/user/pic/deleteonuser.png)
-
-- /usercomm
-
-![assignonerelationship](/user/pic/assignonerelationship.png)
-
-- /usercomm/id (use Query)
-
-![getspecificidbyuseridandcommid](/user/pic/getspecificid.png)
+## Documentation
+[https://github.com/Jinhong19/APower/blob/master/user/userDocumentation/userDoc.md](https://github.com/Jinhong19/APower/blob/master/user/userDocumentation/userDoc.md)
 
 ## Run
 
