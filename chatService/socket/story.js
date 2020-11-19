@@ -219,6 +219,7 @@ module.exports = function(io) {
                         io.of(storyNamespace).to(player.storyRoom).emit("serverMessage", {username:player.username,time:currentTime(),message:response.data});
                     })
                     .catch(function (error){
+                        console.log("bbbbbbbbbbbbbbbbbbbbbbbbb");
                         io.of(storyNamespace).to(player.storyRoom).emit("Error", {username:"System",time:currentTime(),text:"unable to access dice service."});
                     })
                 }
@@ -229,6 +230,7 @@ module.exports = function(io) {
         })
 
         socket.on("joinAsAudience", (audience) => {
+            console.log(audience);
             var AudienceList = audienceList.audienceList;
             var History = history.history;
             AudienceList.findOne({"password":audience.audienceRoom}, function(err, result){

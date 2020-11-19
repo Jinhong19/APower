@@ -6,7 +6,7 @@ require('./db');
 
 const app = express();
 const port = 3020;
-app.use(cors({credentials: true, origin: 'http://localhost:http://localhost:3000/'}));
+app.use(cors({credentials: true, origin: '*'}));
 app.use(express.static(path.join(__dirname, 'public')));
 //const http = require('http').createServer(app);
 

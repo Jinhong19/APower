@@ -1,11 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const path = require('path');
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  //res.render('..public/index.html', { title: 'ScriptWorld' });
-  console.log("aaaaaaaaaaaaaaaaaaaaa");
-  res.send("heelo");
-});
 
 module.exports = router;
