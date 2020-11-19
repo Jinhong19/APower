@@ -16,6 +16,14 @@ For authentication part, users will start by authenticating with a username and 
 
 Finished creating apis for storing related users' id and communities's id. After the front end gives user's id and one community's id, this service's usercomm api with POST menthod can store these two ids. We can see it as a many-to-many relationships between users and communities, but these two services don't talk to each other. After storing all "relationships", we can find all users by one community id, all communities by one user id, delete specific "relationship", and so on through different apis.
 
+## Build Docker Image & Run Container
+
+```bash
+cd user
+docker build -t ysha/apower-user:v3 .
+docker run -p 3008:3008 -d --name apower-user ysha/apower-user:v3
+```
+
 ### Postman examples
 
 - /register
