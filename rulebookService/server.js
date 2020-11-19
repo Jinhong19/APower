@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(upload());
 
 app.listen(port, function() {
-   console.log('community service running on port: ' + port);
+   console.log('rulebook service running on port: ' + port);
 });
 
 let rulebookRouter = require('./routes/rulebook');
