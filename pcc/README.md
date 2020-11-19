@@ -13,3 +13,8 @@ With Maven and Java installed
 With application running
 
 - go to http://localhost:8080/swagger-ui.html
+
+## Build and Run with Docker
+mvn clean install
+docker build -t pcc .
+docker run pcc
