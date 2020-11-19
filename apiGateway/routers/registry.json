@@ -23,6 +23,19 @@
             "host": "http://localhost",
             "port": 3004,
             "url": "http://localhost:3004/" 
+        },
+        "chat":{
+            "apiName": "chat",
+            "host": "http://localhost",
+            "port": 3020,
+            "url": "http://localhost:3020/" 
+        }
+        ,
+        "gamePlay":{
+            "apiName": "gamePlay",
+            "host": "http://localhost",
+            "port": 3010,
+            "url": "http://localhost:3010/" 
         }
     }
 }
