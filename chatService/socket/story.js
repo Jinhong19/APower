@@ -2,6 +2,7 @@ const storyNamespace = '/story';
 const history = require('../model/chatHistory');
 const audienceList = require('../model/audienceList');
 const axios = require('axios');
+const { copyFileSync } = require('fs');
 
 function currentTime(){
     let time = new Date();
@@ -53,6 +54,57 @@ module.exports = function(io) {
             })
             .catch(function (error){
                 socket.emit("Error",{username:"System",time:currentTime(),text:"unable to get story"});
+            })
+        })
+
+        socket.on('getAllSkill', msg=> {
+            axios.get('http://localhost:3010/skill', {
+                params: {
+                    password:msg.room
+                }
+            })
+            .then(function (response){
+                if(response.data.length == 0){
+                    io.of(storyNamespace).to(msg.room).emit("Error",{username:"System",time:currentTime(),text:"no skill exists"});
+                }
+                else{
+                    var allSkill="";
+                    for(var i in response.data){
+                        allSkill = allSkill.concat("Skill Name: " + response.data[i].name + "\nDescription: " + response.data[i].description + "\n");
+                    }
+                    io.of(storyNamespace).to(msg.room).emit("skill", {username:"System",time:currentTime(), text:allSkill});
+                }
+            })
+            .catch(function (error){
+                socket.emit("Error",{username:"System",time:currentTime(),text:"unable to get all skill"});
+            })
+        })
+
+        socket.on('getSkill', msg=> {
+            axios.get('http://localhost:3010/skill', {
+                params: {
+                    password:msg.room
+                }
+            })
+            .then(function (response){
+                if(response.data.length == 0){
+                    io.of(storyNamespace).to(msg.room).emit("Error",{username:"System",time:currentTime(),text:"no skill exists"});
+                }
+                else{
+                    var flag = true;
+                    for(var i in response.data){
+                        if(response.data[i].name == msg.skillName){
+                            flag = false;
+                            io.of(storyNamespace).to(msg.room).emit("skill", {username:"System",time:currentTime(), text:"Skill Name: " + response.data[i].name + "\nDescription: " + response.data[i].description});
+                        }
+                    }
+                    if(flag){
+                        io.of(storyNamespace).to(msg.room).emit("Error",{username:"System",time:currentTime(),text:"skill " + msg.skillName  + " doesn't exists"});
+                    }
+                }
+            })
+            .catch(function (error){
+                socket.emit("Error",{username:"System",time:currentTime(),text:"unable to get all skill"});
             })
         })
 
