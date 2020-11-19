@@ -186,7 +186,7 @@ router.post("/quit", function(req,res){
                 if(result){
                     var player ={};
                     for(var i in result.playerList){
-                        if(result.playerList[i].playerId == req.body.playerId){
+                        if(result.playerList[i].playerId == req.body.userId){
                             flag = true;
                             player = result.playerList[i];
                         }
