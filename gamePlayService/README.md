@@ -24,7 +24,7 @@ Now in the same directory type this in to launch the server:
 node server.js
 ```
 
-Now, open up a web browser and enter http://localhost:3000 in the URL bar.
+Now, open up a web browser and enter http://localhost:3010 in the URL bar.
 
 ## Example
 
