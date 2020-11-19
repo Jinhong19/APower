@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 
 app.listen(port, function() {
-    console.log('community service running on port: ' +port);
+    console.log('gamePlay service running on port: ' +port);
 })
 
 var gamePlay = require("./routes/gamePlay");

@@ -3,6 +3,7 @@ const history = require('../model/chatHistory');
 const audienceList = require('../model/audienceList');
 const axios = require('axios');
 const { copyFileSync } = require('fs');
+const { compileFunction } = require('vm');
 
 function currentTime(){
     let time = new Date();
@@ -107,6 +108,87 @@ module.exports = function(io) {
                 socket.emit("Error",{username:"System",time:currentTime(),text:"unable to get all skill"});
             })
         })
+
+        socket.on('getCharacter', msg => {
+            console.log("aaaaaaaaaaaaaaaaaaa");
+            console.log('http://localhost:8080/characters/' + msg.userId);
+            axios.get('http://localhost:3010/characterById', {
+                params: {
+                    password:msg.room,
+                    userId:msg.userId
+                }
+            })
+            .then(function (response){
+                console.log(response.data);
+                r = "Name: " + response.data.name + "\n" +
+                    "Age: " + response.data.age + "\n" + 
+                    "Gender: " + response.data.gender + "\n" + 
+                    "Homeland: " + response.data.homeland + "\n" +
+                    "Background Story: " + response.data.backgroundStory + "\n" +
+                    "Stats: \n";
+                for(var i in response.data.stats){
+                    r = r.concat("| " + response.data.stats[i].name + ": " + response.data.stats[i].value + "\n");
+                }
+                r = r.concat("Skills: \n");
+                for(var i in response.data.stats){
+                    r = r.concat("| " + response.data.skills[i].name + ": " + response.data.skills[i].value + "\n");
+                }
+                io.of(storyNamespace).to(msg.room).emit("character", {username:"System",time:currentTime(), text:r});
+            })
+            .catch(function (error){
+                socket.emit("Error",{username:"System",time:currentTime(),text:"unable to get character info"});
+            })
+        });
+
+        socket.on('getItems', msg => {
+            axios.get('http://localhost:3010/characterById', {
+                params: {
+                    password:msg.room,
+                    userId:msg.userId
+                }
+            })
+            .then(function (response){
+                if(response.data.items == null){
+                    io.of(storyNamespace).to(msg.room).emit("items", {username:"System",time:currentTime(), text:"character doesn't have any items"});
+                }
+                else{
+                    r = "Items: \n";
+                    for(var i in response.data.items){
+                        console.log(response.data.items[i]);
+                        r = r.concat(response.data.items[i].name + "\n| description: " + response.data.items[i].description + "\n| effect: " + response.data.items[i].effect + "\n");
+                    }
+                    io.of(storyNamespace).to(msg.room).emit("items", {username:"System",time:currentTime(), text:r});
+                }
+            })
+            .catch(function (error){
+                socket.emit("Error",{username:"System",time:currentTime(),text:"unable to get all items"});
+            })
+        });
+
+        socket.on('getSpells', msg => {
+            axios.get('http://localhost:3010/characterById', {
+                params: {
+                    password:msg.room,
+                    userId:msg.userId
+                }
+            })
+            .then(function (response){
+                if(response.data.spells == null){
+                    io.of(storyNamespace).to(msg.room).emit("spells", {username:"System",time:currentTime(), text:"character doesn't have any spells"});
+                }
+                else{
+                    r = "Spells: \n";
+                    for(var i in response.data.spells){
+                        console.log(response.data.spells[i]);
+                        r = r.concat(response.data.spells[i].name + "\n| description: " + response.data.spells[i].description + "\n| effect: " + response.data.spells[i].effect + "\n");
+                    }
+                    io.of(storyNamespace).to(msg.room).emit("spells", {username:"System",time:currentTime(), text:r});
+                }
+            })
+            .catch(function (error){
+                socket.emit("Error",{username:"System",time:currentTime(),text:"unable to get all items"});
+            })
+        });
 
         socket.on('clientMessage-Story', msg => {
             var History = history.history;

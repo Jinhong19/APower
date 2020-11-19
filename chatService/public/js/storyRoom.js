@@ -91,6 +91,23 @@ socket.on('skill', (msg) => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 })
 
+socket.on('character', (msg) => {
+    outputMessage(msg);
+    // Scroll down
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+})
+
+socket.on('items', (msg) => {
+    outputMessage(msg);
+    // Scroll down
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+})
+
+socket.on('spells', (msg) => {
+    outputMessage(msg);
+    // Scroll down
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+})
 
 // Message submit
 chatForm.addEventListener('submit', e => {
@@ -117,6 +134,15 @@ chatForm.addEventListener('submit', e => {
     }
     else if(msg.substring(0,7) == ".skill-"){
         socket.emit('getSkill', {room:room,username:username,skillName:msg.substring(7,msg.length)});
+    }
+    else if(msg.substring(0,7) == ".items-"){
+        socket.emit('getItems', {room:room,userId:msg.substring(7,msg.length)});
+    }
+    else if(msg.substring(0,8) == ".spells-"){
+        socket.emit('getSpells', {room:room,userId:msg.substring(8,msg.length)});
+    }
+    else if(msg.substring(0,6) == ".char-"){
+        socket.emit('getCharacter', {room:room,userId:msg.substring(6,msg.length)});
     }
     // sent message to server
     socket.emit('clientMessage-Story', {storyRoom:room,username:username,message:msg});
