@@ -4,7 +4,7 @@ This service manages player created content
 
 ## Run
 
-With Maven installed
+With Maven and Java installed
 
 - run `mvn spring-boot:run`
 
