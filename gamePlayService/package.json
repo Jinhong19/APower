@@ -1,0 +1,21 @@
+{
+  "name": "gameplayservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "db.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "axios": "^0.21.0",
+    "dotenv": "^8.2.0",
+    "generate-password": "^1.5.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.13"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

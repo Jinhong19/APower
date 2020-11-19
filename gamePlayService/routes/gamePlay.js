@@ -81,7 +81,7 @@ router.post("/getRoomByPlayerId", function(req,res){
     console.log(req.body.userId)
 
     Storyroom.find({"playerList.playerId":req.body.userId}, function(err, result){
-        if(result){
+        if(result.length > 0){
             for(var i in result){
                 allResult.push({
                     storyId:result[i].storyId,
@@ -93,6 +93,9 @@ router.post("/getRoomByPlayerId", function(req,res){
                 console.log(allResult);
                 res.status(200).send(allResult);
             }
+        }
+        else if(result.length <=0){
+            res.status(400).send("no result");
         }
         else{
             res.status(400).send("game room doesn't exists");
@@ -207,7 +210,7 @@ router.post("/assignHost", function(req,res){
 
     Storyroom.exists({"password":req.body.password, "hostId":req.body.userId}, function(err, result){
         if(result){
-            storyRoom.assign_Host(password,req.body.newHostId);
+            storyRoom.assign_Host(req.body.password,req.body.newHostId);
             res.status(200).send("host assign success")
         }
         else{
