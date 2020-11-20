@@ -58,5 +58,8 @@ We have a separate database for each service.
 | [gamePlayService](gamePlayService) | 3010 | gmaePlayService manages all chat rooms | [https://docs.google.com/document/d/1luGiFOSjdJKW5bDKInlNpTgfGpU0mtahJvooOXUMxFo/edit#heading=h.qeak529ebmx](https://docs.google.com/document/d/1luGiFOSjdJKW5bDKInlNpTgfGpU0mtahJvooOXUMxFo/edit#heading=h.qeak529ebmx) |
 | [frontend](frontend) | 4000 | frontend service manages all frontend files | see readme.md in frontend |
 
-## Link
-Demo: https://drive.google.com/file/d/1ziqleJjWilCAn6oQQxksVZBHLtWB4qZD/view?usp=sharing
+## Video Links
+Phase 3 Demo: https://drive.google.com/file/d/1ziqleJjWilCAn6oQQxksVZBHLtWB4qZD/view?usp=sharing
+Phase 4 Demo: 
+Jinhong Gan: 
+
