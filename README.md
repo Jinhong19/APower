@@ -59,7 +59,7 @@ We have a separate database for each service.
 | [frontend](frontend) | 4000 | frontend service manages all frontend files | see readme.md in frontend |
 
 ## Video Links
-Phase 3 Demo: https://drive.google.com/file/d/1ziqleJjWilCAn6oQQxksVZBHLtWB4qZD/view?usp=sharing
-Phase 4 Demo: 
-Jinhong Gan: 
+Phase 3 Demo: https://drive.google.com/file/d/1ziqleJjWilCAn6oQQxksVZBHLtWB4qZD/view?usp=sharing  
+Phase 4 Demo:  
+Jinhong Gan:  
 
