@@ -4,7 +4,7 @@ var s;
 
 module.exports = function(io) {
     io.on('connection', socket => {
-        var s = i.connect('http://localhost:3020/story');
+        var s = i.connect('http://host.docker.internal:3020/story');
 
         //story room
         socket.on('joinAsPlayer', (player) =>{

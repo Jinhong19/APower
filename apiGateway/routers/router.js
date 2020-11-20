@@ -4,18 +4,14 @@ const router = express.Router();
 const axios = require("axios");
 const registry = require("./registry.json");
 const fs = require("fs");
-const HAProxy = require('haproxy');
 
-module.exports = function(io) {
-  console.log("aaaaaaaaaaaaaa");
-}
 
 // .all takes all kinds of request POST, GET ...
 router.all("/:apiName/:path", async function(req, res) {
   console.log(req.body)
   console.log("called " + req.params.apiName);
   //check if the api exist in registry
-/*
+
   if (registry.services[req.params.apiName]) {
     await axios({
       method: req.method,
@@ -29,10 +25,10 @@ router.all("/:apiName/:path", async function(req, res) {
     });
   } else {
     res.send("API name doesn't exist");
-  }*/
+  }
 });
 
-/*router.all("/:apiName/:path/:path2", (req, res) => {
+router.all("/:apiName/:path/:path2", (req, res) => {
   console.log("called " + req.params.apiName);
   //check if the api exist in registry
   if (registry.services[req.params.apiName]) {
@@ -49,7 +45,7 @@ router.all("/:apiName/:path", async function(req, res) {
   } else {
     res.send("API name doesn't exist");
   }
-});*/
+});
 
 //Auto register for new api
 // following code to use above post request:

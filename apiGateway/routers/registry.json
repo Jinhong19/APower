@@ -14,28 +14,40 @@
         },
         "user": {
             "apiName": "user",
-            "host": "http://localhost",
+            "host": "http://host.docker.internal",
             "port": 3008,
-            "url": "http://localhost:3008/"
+            "url": "http://host.docker.internal:3008/"
         },
         "community": {
             "apiName": "community",
-            "host": "http://localhost",
+            "host": "http://host.docker.internal",
             "port": 3004,
-            "url": "http://localhost:3004/" 
+            "url": "http://host.docker.internal:3004/" 
         },
         "chat":{
             "apiName": "chat",
-            "host": "http://localhost",
+            "host": "http://host.docker.internal",
             "port": 3020,
-            "url": "http://localhost:3020/" 
+            "url": "http://host.docker.internal:3020/" 
         }
         ,
         "gamePlay":{
             "apiName": "gamePlay",
-            "host": "http://localhost",
+            "host": "http://host.docker.internal",
             "port": 3010,
-            "url": "http://localhost:3010/" 
+            "url": "http://host.docker.internal:3010/" 
+        },
+        "pcc":{
+            "apiName": "pcc",
+            "host": "http://host.docker.internal",
+            "port": 8080,
+            "url": "http://host.docker.internal:8080/" 
+        },
+        "rulebook":{
+            "apiName": "rulebook",
+            "host": "http://host.docker.internal",
+            "port": 3005,
+            "url": "http://host.docker.internal:3005/" 
         }
     }
 }
