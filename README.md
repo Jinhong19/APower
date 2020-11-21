@@ -58,5 +58,11 @@ We have a separate database for each service.
 | [gamePlayService](gamePlayService) | 3010 | gmaePlayService manages all chat rooms | [https://docs.google.com/document/d/1luGiFOSjdJKW5bDKInlNpTgfGpU0mtahJvooOXUMxFo/edit#heading=h.qeak529ebmx](https://docs.google.com/document/d/1luGiFOSjdJKW5bDKInlNpTgfGpU0mtahJvooOXUMxFo/edit#heading=h.qeak529ebmx) |
 | [frontend](frontend) | 4000 | frontend service manages all frontend files | see readme.md in frontend |
 
-## Link
-Demo: https://drive.google.com/file/d/1ziqleJjWilCAn6oQQxksVZBHLtWB4qZD/view?usp=sharing
+## Video Links
+Phase 3 Demo: https://drive.google.com/file/d/1ziqleJjWilCAn6oQQxksVZBHLtWB4qZD/view?usp=sharing  
+Phase 4 Demo: https://drive.google.com/file/d/1o2bMB9fLbjUUsU1ueLeankS1hVe57eHc/view?usp=sharing  
+Jinhong Gan: https://drive.google.com/file/d/1jQZ1eWgP-VjnWBzCxJDMpQjBw7xkRO52/view?usp=sharing  
+Yi Sha: https://umass-amherst.zoom.us/rec/share/13aygUwuNcmwqPgS94jAm0pcV29DBKrkW2ZdLtmb4qf0nx2051RQTanvYIInoH9U.8qZaph6BfKQyuDg4
+Saswata Mishra & Kash Somani: https://drive.google.com/file/d/1ziqleJjWilCAn6oQQxksVZBHLtWB4qZD/view?usp=sharing  
+jiachao chen: https://drive.google.com/drive/u/1/folders/1lB_tFChE51bUmg-OqO_ZK0ysLLyq8WaZ
+
