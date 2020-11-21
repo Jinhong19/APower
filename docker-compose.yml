@@ -1,10 +1,34 @@
 version: "3"
 services:
   apigateway:
-    image: api-gateway
+    image: apigateway
     ports:
       - "3000:3000"
   dice:
-    image: dice-service
+    image: dice
     ports:
       - "3003:3003"
+  community:
+    image: community
+    ports:
+      - "3004:3004"
+  chat:
+    image: chat
+    ports:
+      - "3020:3020"
+  gameplay:
+    image: gameplay
+    ports:
+      - "3010:3010"
+  pcc:
+    image: pcc
+    ports:
+      - "8080:8080"
+  rulebook:
+    image: rulebook
+    ports:
+      - "3005:3005"
+  user:
+    image: user
+    ports:
+      - "3008:3008"
