@@ -24,7 +24,7 @@ We aim to create an easily scalable application by using microservices. The MVP 
 
 ## System Design
 
-![Image of System Design](https://github.com/Jinhong19/APower/blob/master/img/system_design.png)
+![Image of System Design](https://github.com/Jinhong19/APower/blob/master/img/system_design.PNG)
 
 - We are using the structure shown in the figure above to build our application. Each service is going to run separately and have a REST api that handles a subset of the requests. We use requests and responses with JSON for communications between the services. Most of the services are built with Node.js Express, with the exception of user service(Next.js) and player created content service(Java Spring).
 - API Gateway is built to redirect all the user API calls to the correct services. User service stores user data and handles user log in and register. Community management service manages manages all community data, and handles requests like adding a user to a community. Rulebook service manages all rulebook, stories, skills creation and access. Player created content service manages player created content like items and spells that can be used in different rulebooks. 
