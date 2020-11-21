@@ -48,7 +48,7 @@ router.post('/createGameRoom', function(req,res){
         }
     });
 
-    axios.post('http://localhost:3020/createChatHistory', {
+    axios.post('http://host.docker.internal:3020/createChatHistory', {
             "roomName":password
         })
         .then(function (response){
@@ -302,7 +302,7 @@ router.get('/story', function(req, res){
 
     Storyroom.findOne({"password":password}, function(err, result){
         if(result){
-            axios.get('http://localhost:3005/storyById', {
+            axios.get('http://host.docker.internal:3005/storyById', {
                 params: {
                     storyId:result.storyId
                 }
@@ -334,7 +334,7 @@ router.get('/skill', function(req, res){
 
     Storyroom.findOne({"password":password}, function(err, result){
         if(result){
-            axios.get('http://localhost:3005/allSkill', {
+            axios.get('http://host.docker.internal:3005/allSkill', {
                 params: {
                     rulebookId:result.rulebookId
                 }
@@ -380,7 +380,7 @@ router.get('/characterById', function(req,res){
                 }
             }
             if(flag){
-                axios.get('http://localhost:8080/characters/' + characterId, {
+                axios.get('http://host.docker.internal:8080/characters/' + characterId, {
                 })
                 .then(function (response){
                     console.log(response.data);
