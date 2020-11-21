@@ -18,7 +18,7 @@ module.exports = function(io) {
             var History =history.history;
             History.findOne({"roomName":player.storyRoom}, function(err, result){
                 if(result){
-                    axios.get('http://localhost:3010/roomMember', {
+                    axios.get('http://host.docker.internal:3010/roomMember', {
                         params: {
                             password:player.storyRoom
                         }
@@ -45,7 +45,7 @@ module.exports = function(io) {
         });
 
         socket.on('getStory', msg=> {
-            axios.get('http://localhost:3010/story', {
+            axios.get('http://host.docker.internal:3010/story', {
                 params: {
                     password:msg.room
                 }
@@ -59,7 +59,7 @@ module.exports = function(io) {
         })
 
         socket.on('getAllSkill', msg=> {
-            axios.get('http://localhost:3010/skill', {
+            axios.get('http://host.docker.internal:3010/skill', {
                 params: {
                     password:msg.room
                 }
@@ -82,7 +82,7 @@ module.exports = function(io) {
         })
 
         socket.on('getSkill', msg=> {
-            axios.get('http://localhost:3010/skill', {
+            axios.get('http://host.docker.internal:3010/skill', {
                 params: {
                     password:msg.room
                 }
@@ -111,8 +111,8 @@ module.exports = function(io) {
 
         socket.on('getCharacter', msg => {
             console.log("aaaaaaaaaaaaaaaaaaa");
-            console.log('http://localhost:8080/characters/' + msg.userId);
-            axios.get('http://localhost:3010/characterById', {
+            console.log('http://host.docker.internal:8080/characters/' + msg.userId);
+            axios.get('http://host.docker.internal:3010/characterById', {
                 params: {
                     password:msg.room,
                     userId:msg.userId
@@ -141,7 +141,7 @@ module.exports = function(io) {
         });
 
         socket.on('getItems', msg => {
-            axios.get('http://localhost:3010/characterById', {
+            axios.get('http://host.docker.internal:3010/characterById', {
                 params: {
                     password:msg.room,
                     userId:msg.userId
@@ -166,7 +166,7 @@ module.exports = function(io) {
         });
 
         socket.on('getSpells', msg => {
-            axios.get('http://localhost:3010/characterById', {
+            axios.get('http://host.docker.internal:3010/characterById', {
                 params: {
                     password:msg.room,
                     userId:msg.userId
@@ -213,7 +213,7 @@ module.exports = function(io) {
             var History = history.history;
             History.exists({'roomName':player.storyRoom}, function(err, result){
                 if(result){
-                    axios.post('http://localhost:3003/dice')
+                    axios.post('http://host.docker.internal:3003/dice')
                     .then(function (response){
                         history.add_History(player.storyRoom,{username:player.username,time:currentTime(),message:response.data});
                         io.of(storyNamespace).to(player.storyRoom).emit("serverMessage", {username:player.username,time:currentTime(),message:response.data});
